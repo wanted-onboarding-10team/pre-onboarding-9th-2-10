@@ -26,9 +26,13 @@ const TravelProductCard = (product: TravelProduct) => {
   const dispatch = useDispatch();
 
   const makeReservation = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // TODO: 예약 구현
     event.stopPropagation();
-    confirm(`[${product.name}] 상품을 예약하시겠습니까?`) && dispatch(add(product));
+    if (confirm(`[${product.name}] 상품을 예약하시겠습니까?`)) {
+      dispatch(add(product));
+      if (isOpen) {
+        onClose();
+      }
+    }
   };
 
   return (

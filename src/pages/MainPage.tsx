@@ -7,7 +7,6 @@ import { TravelProduct } from 'utils/type/travelProduct';
 import BasicLayout from './BasicLayout';
 
 const MainPage = () => {
-  //TODO: 여행 상품 정보 받아와야 함
   const travelProductsData = useQuery<AxiosResponse<TravelProduct[]>>(
     'travelProducts',
     getTravelProducts,
