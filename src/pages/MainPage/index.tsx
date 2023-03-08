@@ -1,17 +1,17 @@
-import axios from 'axios';
 import { Box, Grid } from '@chakra-ui/react';
 import Goods from 'components/Goods';
 import React, { useEffect, useState } from 'react';
 import { GoodsType } from 'types/Goods';
 import Layout from 'components/common/Layout';
 import { useNavigate } from 'react-router-dom';
+import { getGoodsAPI } from 'utils/api/goods';
 
 const MainPage = () => {
   const navigate = useNavigate();
   const [goodsList, setGoodsList] = useState<GoodsType[]>();
 
   const getData = async () => {
-    const { data } = await axios.get<GoodsType[]>('/data/mock_data.json');
+    const data = await getGoodsAPI();
     setGoodsList(data);
   };
 
