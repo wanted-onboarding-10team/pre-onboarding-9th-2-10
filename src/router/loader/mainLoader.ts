@@ -1,6 +1,7 @@
-import MOCK_DATA from 'data/mock-data';
+import { getTravelListApi } from 'utils/api/travel';
 
-const mainLoader = () => {
-  return MOCK_DATA;
+const mainLoader = async () => {
+  const { data } = await getTravelListApi();
+  return data;
 };
 export default mainLoader;
