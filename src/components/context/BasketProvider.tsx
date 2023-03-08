@@ -13,18 +13,25 @@ export const BasketDispatchContext = createContext<ActionDispatch | null>(null);
 function reducer(state: travleContent[], action: Action): BasketState {
   switch (action.type) {
     case 'ADD_ITEM':
-      const added = [...state];
-      added.push(action.item);
-      return added;
+      const addData = [...state];
+      addData.push(action.item);
+      localStorage.setItem('shopping-basket', JSON.stringify(addData));
+      return addData;
     case 'DELETE_ITEM':
-      return [...state].filter(v => v.idx !== action.item.idx);
+      const deleteData = [...state];
+      deleteData.splice(
+        deleteData.findIndex(v => v.idx === action.item.idx),
+        1,
+      );
+      localStorage.setItem('shopping-basket', JSON.stringify(deleteData));
+      return deleteData;
     default:
       throw new Error('Unhandleed Action');
   }
 }
-
 const BasketProvider = ({ children }: { children: ReactNode }) => {
-  const [basket, dispatch] = useReducer(reducer, []);
+  const localdata = localStorage.getItem('shopping-basket');
+  const [basket, dispatch] = useReducer(reducer, localdata === null ? [] : JSON.parse(localdata));
 
   return (
     <BasketStateContext.Provider value={basket}>
