@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+[Feature #2] 메인페이지 구현
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 요구 사항
 
-## Available Scripts
+1. 유저가 페이지를 처음 열었을 때 “/main”에 도착하도록 만들어주세요
+   - main에는 여행 상품 정보 (mock JSON) 를 활용하여 여행 상품 정보를 노출해야합니다.
+     - 리스트에서 노출해야 하는 정보: `idx, name, mainImage, price, spaceCategory`
+   - 예약 버튼을 달아 예약 버튼을 클릭시 여행 상품 장바구니에서 사용 할 수 있도록 상품 데이터
+     를 저장해주세요.
+   - 여행 상품 정보를 클릭했을 때 여행 상품을 자세히 볼 수 있는 모달창을 제작해주세요
+     - 모달에서 노출해야 하는 정보: `idx, name, mainImage, description, spaceCategory, price, maximumPurchases, registrationDate`
 
-In the project directory, you can run:
+### 사용 라이브러리
 
-### `npm start`
+- reac-router-dom
+- axios
+- react-query
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 구현
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+[ ] 라우터 구현(/main, /reservations)
+[ ] 컴포넌트 구조 설계 (메인페이지에 대한)
+[ ] 여행 상품 정보 노출
 
-### `npm test`
+### 테스트
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[ ]
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 발견한 문제
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. `React must be in scope when using JSX`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   1. React 17.0 버전 이전에는 파일 내에 `import React from 'react'` 를 작성해야 했다.
+   2. 컴포넌트를 만들 때 React.createElement 함수를 호출해서 만드는데, 해당 파일 내에 react가 import 하지 않으면 오류가 발생한다.
+   3. 하지만 17.0 버전 이후에는 더 이항 가져오기를 추가할 필요가 없어졌다. JSX를 컴파일할 때 가져오는 것을 자체적으로 추가했기 때문.
+   4. 그래서 해당 버전 이후로는 Eslint에서 해당 규칙을 비활성화하여 사용할 수 있다.
 
-### `npm run eject`
+   ```
+   "react/jsx-uses-react": "off",
+   "react/react-in-jsx-scope": "off"
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+   [관련글](https://dev.to/chandelieraxel/why-do-react-need-to-be-in-scope-for-jsx-3hen)
