@@ -8,3 +8,11 @@ export interface TravelProduct {
   maximumPurchases: number;
   registrationDate: string;
 }
+
+export interface ReservedTravelProduct {
+  idx: number;
+  name: string;
+  mainImage: string;
+  price: number;
+  spaceCategory: string;
+}

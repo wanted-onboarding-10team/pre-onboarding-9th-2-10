@@ -1,7 +1,12 @@
-import MainPage from 'pages/MainPage';
+import { ChakraProvider } from '@chakra-ui/react';
+import { Outlet } from 'react-router-dom';
 
 function App() {
-  return <MainPage />;
+  return (
+    <ChakraProvider>
+      <Outlet />
+    </ChakraProvider>
+  );
 }
 
 export default App;

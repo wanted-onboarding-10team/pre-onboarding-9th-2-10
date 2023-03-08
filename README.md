@@ -28,7 +28,7 @@
 
 ---
 
-## 발견한 문제
+## issue
 
 1. `React must be in scope when using JSX`
 
@@ -43,3 +43,12 @@
    ```
 
    [관련글](https://dev.to/chandelieraxel/why-do-react-need-to-be-in-scope-for-jsx-3hen)
+
+모달창 구현을 메인 페이지에서 할 것인지, Card 컴포넌트에서 할 것인지 고민
+MainPage에서 모달창 관련 훅을 사용한다고 해도, 전체가 다시 그려지는 것이기 때문에,
+결국 자식 컴포넌트들도 다시 그려진다 생각이 들어 Card에서 모달창을 열도록 우선 개발함.
+
+2. 장바구니 아이템 Redux toolkit 사용하여 관리
+   Redux toolkit 사용 이유
+   -> 예약한 상품을 main에서도, reservedPage 에서도 사용할 것이고,
+   예약을 하는 컴포넌트와 보여주는 컴포넌트가 분리되어 있으므로 전역으로 사용하기 위해 reduc toolkit 을 사용함
