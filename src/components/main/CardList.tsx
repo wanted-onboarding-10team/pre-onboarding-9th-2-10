@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, SimpleGrid } from '@chakra-ui/layout';
-import { getTravelListAPI } from 'api/main';
+import React, { SimpleGrid } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
 import { Data } from 'types';
 import Card from './Card';
+import { useAppSelector, useAppDispatch } from 'utils/hooks';
+import { getTravalList } from '../../utils/mainReducer';
 
 const initialValue = [
   {
@@ -18,18 +19,11 @@ const initialValue = [
 ];
 
 const CardList = () => {
-  const [datas, setDatas] = useState(initialValue as Data[]);
-  const getData = async () => {
-    try {
-      const { data } = await getTravelListAPI();
-      setDatas(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const { data: datas, status, rejectValue } = useAppSelector(state => state.main);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getData();
+    dispatch(getTravalList());
   }, []);
 
   return (
