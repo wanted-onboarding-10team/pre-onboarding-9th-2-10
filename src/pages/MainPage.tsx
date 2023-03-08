@@ -1,6 +1,6 @@
 import { Container, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 import { AxiosResponse } from 'axios';
-import TravelProductCard from 'components/presenter/TravelProductCard';
+import TravelProductCard from 'components/TravelProductCard';
 import { useQuery } from 'react-query';
 import { getTravelProducts } from 'utils/api/travelApi';
 import { TravelProduct } from 'utils/type/travelProduct';

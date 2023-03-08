@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
-import ReservedTravelProductList from 'components/presenter/ReservedTravelProductList';
+import ReservedTravelProductList from 'components/ReservedTravelProductList';
 
 interface BasicLayoutParams {
   children: React.ReactElement;
