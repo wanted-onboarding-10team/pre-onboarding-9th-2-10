@@ -2,9 +2,9 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Root from 'pages/Root';
 import TravleListPage from 'pages/TravleListPage';
-import rootLoader from './loader/rootLoader';
+import rootLoader from 'router/loader/rootLoader';
 import { PATH_ROUTES } from 'constant';
-import mainLoader from './loader/mainLoader';
+import mainLoader from 'router/loader/mainLoader';
 
 const router = createBrowserRouter([
   {
