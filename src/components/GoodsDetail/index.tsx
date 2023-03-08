@@ -27,8 +27,17 @@ const GoodsDetail = ({ isOpen, onClose, item }: GoodsDetailProps) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
 
-        <ModalBody>{item.idx}</ModalBody>
         <ModalContent maxW="1000px" height="550px" padding="40px 40px">
+          <Text
+            position="absolute"
+            fontSize="2xl"
+            margin="2"
+            color="white"
+            textShadow="0px 2px 4px rgb(0 0 0 / 50%);"
+            as="b"
+          >
+            {item.idx}
+          </Text>
           <ModalBody display="flex" gap="16" width="1200px" padding="0">
             <Image src={item.mainImage} width="450px" />
             <Flex flexDir="column" width="400px">

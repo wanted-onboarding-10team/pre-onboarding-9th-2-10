@@ -35,6 +35,16 @@ const Goods = ({ item }: ItemPropsType) => {
     <>
       <Card align="center">
         <CardBody onClick={onOpen} cursor="pointer" position="relative">
+          <Text
+            position="absolute"
+            fontSize="2xl"
+            margin="2"
+            color="white"
+            textShadow="0px 2px 4px rgb(0 0 0 / 50%);"
+            as="b"
+          >
+            {item.idx}
+          </Text>
           <Image src={item.mainImage} alt={item.name} borderRadius="lg" width="100%" />
           {isReservation ? (
             <IconButton
