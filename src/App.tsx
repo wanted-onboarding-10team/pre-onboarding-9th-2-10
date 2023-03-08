@@ -2,14 +2,14 @@ import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { RouterProvider } from 'react-router-dom';
 import router from 'router';
-import BarsketProvider from 'components/context/BarsketProvider';
+import BasketProvider from 'components/context/BasketProvider';
 
 function App() {
   return (
     <ChakraProvider>
-      <BarsketProvider>
+      <BasketProvider>
         <RouterProvider router={router} />
-      </BarsketProvider>
+      </BasketProvider>
     </ChakraProvider>
   );
 }
