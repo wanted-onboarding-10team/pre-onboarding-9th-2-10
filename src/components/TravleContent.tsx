@@ -14,8 +14,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { travleContent } from 'types';
-import TravleDetailModal from './modal/TravleDetailModal';
-import { useBasketDispatch, useBasketState } from './context/BasketProvider';
+import TravleDetailModal from 'components/modal/TravleDetailModal';
+import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
 
 const TravleContent = ({
   idx,
