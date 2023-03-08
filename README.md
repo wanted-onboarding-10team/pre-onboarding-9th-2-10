@@ -48,3 +48,6 @@ MainPage에서 모달창 관련 훅을 사용한다고 해도, 전체가 다시 
    Redux toolkit 사용 이유
    -> 예약한 상품을 main에서도, reservedPage 에서도 사용할 것이고,
    예약을 하는 컴포넌트와 보여주는 컴포넌트가 분리되어 있으므로 전역으로 사용하기 위해 redux toolkit 을 사용함
+
+3. eslint `'no-unused-vars' 레벨을 error 에서 warn 으로 변경해야 할 것으로 보임
+   개발 시에 해당 오류로 다른 부분을 확인할 수 없어 수정이 필요할 것 같음
