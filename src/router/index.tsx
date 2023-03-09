@@ -4,6 +4,7 @@ import TravleListPage from 'pages/TravleListPage';
 import { createBrowserRouter } from 'react-router-dom';
 import mainLoader from 'router/loader/mainLoader';
 import rootLoader from 'router/loader/rootLoader';
+import ReservationPage from './../pages/ReservationPage';
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path: PATH_ROUTES.shopBasket,
-    element: <TravleListPage />,
+    element: <ReservationPage />,
   },
 ]);
 
