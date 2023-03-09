@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { AddIcon, MinusIcon, CloseIcon } from '@chakra-ui/icons';
 import { travleContent } from 'types';
-import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
+import { ActionName, useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
 
 const ReservationsContent = ({
   idx,
@@ -50,7 +50,7 @@ const ReservationsContent = ({
       alert('최대 수량을 넘겨 담을 수 없습니다.');
     } else {
       dispatch({
-        type: 'ADD_ITEM',
+        type: ActionName.ADD_ITEM,
         item: {
           ...val,
         },
@@ -63,7 +63,7 @@ const ReservationsContent = ({
       alert('최소 주문 수량은 1개 입니다.');
     } else {
       dispatch({
-        type: 'DELETE_ITEM',
+        type: ActionName.DELETE_ITEM,
         item: {
           ...val,
         },
@@ -72,7 +72,9 @@ const ReservationsContent = ({
   };
 
   const allDelete = () => {
-    baskets.forEach(e => e.idx === idx && dispatch({ type: 'DELETE_ITEM', item: { ...e } }));
+    baskets.forEach(
+      e => e.idx === idx && dispatch({ type: ActionName.DELETE_ITEM, item: { ...e } }),
+    );
   };
 
   return (

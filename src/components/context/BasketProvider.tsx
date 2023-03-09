@@ -1,9 +1,14 @@
 import React, { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
 import { travleContent } from 'types';
 
+export enum ActionName {
+  ADD_ITEM = 'ADD_ITEM',
+  DELETE_ITEM = 'DELETE_ITEM',
+}
+
 type Action =
-  | { type: 'ADD_ITEM'; item: travleContent }
-  | { type: 'DELETE_ITEM'; item: travleContent };
+  | { type: ActionName.ADD_ITEM; item: travleContent }
+  | { type: ActionName.DELETE_ITEM; item: travleContent };
 
 type ActionDispatch = Dispatch<Action>;
 type BasketState = travleContent[];
@@ -12,12 +17,12 @@ export const BasketDispatchContext = createContext<ActionDispatch | null>(null);
 
 function reducer(state: travleContent[], action: Action): BasketState {
   switch (action.type) {
-    case 'ADD_ITEM':
+    case ActionName.ADD_ITEM:
       const addData = [...state];
       addData.push(action.item);
       localStorage.setItem('shopping-basket', JSON.stringify(addData));
       return addData;
-    case 'DELETE_ITEM':
+    case ActionName.DELETE_ITEM:
       const deleteData = [...state];
       deleteData.splice(
         deleteData.findIndex(v => v.idx === action.item.idx),

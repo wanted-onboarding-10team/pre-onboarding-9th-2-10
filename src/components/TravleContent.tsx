@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { travleContent } from 'types';
 import TravleDetailModal from 'components/modal/TravleDetailModal';
-import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
+import { ActionName, useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
 
 const TravleContent = ({
   idx,
@@ -45,7 +45,7 @@ const TravleContent = ({
 
   const addItem = () => {
     dispatch({
-      type: 'ADD_ITEM',
+      type: ActionName.ADD_ITEM,
       item: {
         idx,
         name,
