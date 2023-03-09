@@ -1,4 +1,4 @@
-import client from './client';
+import client from 'utils/api/client';
 
 const { host, protocol } = location;
 
