@@ -134,7 +134,7 @@ const ReservationsContent = ({
         </Stack>
       </CardBody>
 
-      <CardFooter display='flex' flexDir='column' justifyContent='space-between'>
+      <CardFooter display='flex' flexDir='column' justifyContent='space-between' width='150px'>
         <Flex gap='3' flexDir='column'>
           <Text fontSize='sm' as='b'>
             수량
@@ -156,7 +156,7 @@ const ReservationsContent = ({
             상품금액
           </Text>
           <Text as='b' color='red.400'>
-            {(count * price).toLocaleString('ko-KR')}
+            {(count * price).toLocaleString('ko-KR')}원
           </Text>
         </Flex>
       </CardFooter>

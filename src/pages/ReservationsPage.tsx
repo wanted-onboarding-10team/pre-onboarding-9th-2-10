@@ -1,3 +1,4 @@
+import { Flex, Text } from '@chakra-ui/react';
 import { useBasketState } from 'components/context/BasketProvider';
 import MainLayout from 'components/MainLayout';
 import ReservationsContent from 'components/ReservationsContent';
@@ -30,7 +31,14 @@ const ReservationsPage = () => {
         <>장바구니에 담은 상품이 없습니다.</>
       ) : (
         <>
-          {totalPrice.toLocaleString('ko-KR')}
+          <Flex fontSize='24' width='100%' gap='10' marginBottom={'8'} justifyContent='flex-end'>
+            <Text display={'block'} as='b'>
+              총 결제액 수
+            </Text>
+            <Text display={'block'} color='red.400' as='b'>
+              {totalPrice.toLocaleString('ko-KR')}원
+            </Text>
+          </Flex>
           {filterBaskets?.map((basket, i) => (
             <ReservationsContent {...basket} key={i} />
           ))}
