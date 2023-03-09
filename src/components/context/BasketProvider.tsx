@@ -3,7 +3,8 @@ import { travleContent } from 'types';
 
 type Action =
   | { type: 'ADD_ITEM'; item: travleContent }
-  | { type: 'DELETE_ITEM'; item: travleContent };
+  | { type: 'DELETE_ITEM'; item: travleContent }
+  | { type: 'UPDATE_ITEM'; item: travleContent; changeQuantity: number };
 
 type ActionDispatch = Dispatch<Action>;
 type BasketState = travleContent[];
@@ -14,17 +15,19 @@ function reducer(state: travleContent[], action: Action): BasketState {
   switch (action.type) {
     case 'ADD_ITEM':
       const addData = [...state];
-      addData.push(action.item);
+      addData.push({ ...action.item });
       localStorage.setItem('shopping-basket', JSON.stringify(addData));
       return addData;
     case 'DELETE_ITEM':
-      const deleteData = [...state];
-      deleteData.splice(
-        deleteData.findIndex(v => v.idx === action.item.idx),
-        1,
-      );
+      const deleteData = [...state].filter(value => value.idx !== action.item.idx);
       localStorage.setItem('shopping-basket', JSON.stringify(deleteData));
       return deleteData;
+    case 'UPDATE_ITEM':
+      const updateData = [...state];
+      updateData[updateData.findIndex(data => data.idx === action.item.idx)].quantity =
+        action.changeQuantity;
+      localStorage.setItem('shopping-basket', JSON.stringify(updateData));
+      return updateData;
     default:
       throw new Error('Unhandleed Action');
   }
