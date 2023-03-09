@@ -8,8 +8,10 @@ import {
   Divider,
   GridItem,
   Heading,
+  HStack,
   Image,
   Stack,
+  Tag,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -31,12 +33,15 @@ const TravleContent = ({
   const dispatch = useBasketDispatch();
   const basket = useBasketState();
   const [isMaximum, setIsMaximum] = useState(false);
+  const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
     if (basket.filter(product => product.idx === idx).length >= maximumPurchases)
       setIsMaximum(true);
     else setIsMaximum(false);
   }, [basket]);
+
+  const getCount = () => setCount(basket.filter(e => e.idx === idx).length);
 
   const addItem = () => {
     dispatch({
@@ -54,6 +59,9 @@ const TravleContent = ({
     });
   };
 
+  useEffect(() => {
+    getCount();
+  }, [addItem]);
   return (
     <GridItem>
       <Card maxW={'sm'} variant='outline'>
@@ -61,7 +69,10 @@ const TravleContent = ({
           <Image src={mainImage} alt='product image' fit={'fill'} htmlWidth='100%' />
           <Stack mt={6} spacing={3}>
             <Heading size={'sm'}>{name}</Heading>
-            <Text>상품번호:{idx}</Text>
+            <HStack>
+              <Tag>상품번호: {idx}</Tag>
+              <Tag>남은 수량: {maximumPurchases - count}</Tag>
+            </HStack>
             <Text>사용가능 지역:{spaceCategory}</Text>
             <Text fontSize='2xl'>{price.toLocaleString('ko-KR')}원</Text>
           </Stack>
