@@ -6,18 +6,20 @@ import { travleContent } from 'types';
 
 const ReservationsPage = () => {
   const baskets = useBasketState();
-  const [filterBaskets, setFilterBaskets] = useState<travleContent[]>();
+  const [filterBaskets, setFilterBaskets] = useState<travleContent[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
     setFilterBaskets(
-      baskets.filter((item, i) => {
-        return (
-          baskets.findIndex(item2 => {
-            return item.idx === item2.idx;
-          }) === i
-        );
-      }),
+      baskets
+        .filter((item, i) => {
+          return (
+            baskets.findIndex(item2 => {
+              return item.idx === item2.idx;
+            }) === i
+          );
+        })
+        .sort((a, b) => a.idx - b.idx),
     );
     setTotalPrice(baskets.map(item => item.price).reduce((prev, curr) => prev + curr, 0));
   }, [baskets]);

@@ -26,10 +26,22 @@ const ReservationsContent = ({
   const baskets = useBasketState();
   const [count, setCount] = useState<number>(0);
   const dispatch = useBasketDispatch();
+  const [isMaximum, setIsMaximum] = useState(false);
+
+  const getCount = () => {
+    setCount(baskets.filter(v => v.idx === idx).length);
+  };
 
   useEffect(() => {
-    setCount(baskets.filter(v => v.idx === idx).length);
+    if (baskets.filter(v => v.idx === idx).length >= maximumPurchases) setIsMaximum(true);
+    else setIsMaximum(false);
+
+    getCount();
   }, [baskets]);
+
+  useEffect(() => {
+    if (count === 0) getCount();
+  }, [count]);
 
   const deleteItem = () => {
     dispatch({
@@ -62,14 +74,6 @@ const ReservationsContent = ({
       },
     });
   };
-
-  const [isMaximum, setIsMaximum] = useState(false);
-
-  useEffect(() => {
-    if (baskets.filter(product => product.idx === idx).length >= maximumPurchases)
-      setIsMaximum(true);
-    else setIsMaximum(false);
-  }, [baskets]);
 
   return (
     <Card
