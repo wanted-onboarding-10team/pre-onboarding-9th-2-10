@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -13,9 +12,10 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { travleContent } from 'types';
-import TravleDetailModal from 'components/modal/TravleDetailModal';
 import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
+import TravleDetailModal from 'components/modal/TravleDetailModal';
+import { useEffect, useState } from 'react';
+import { travleContent } from 'types';
 
 const TravleContent = ({
   idx,
@@ -45,11 +45,9 @@ const TravleContent = ({
         idx,
         name,
         mainImage,
-        description,
-        spaceCategory,
         price,
         maximumPurchases,
-        registrationDate,
+        count: 1,
       },
     });
   };
