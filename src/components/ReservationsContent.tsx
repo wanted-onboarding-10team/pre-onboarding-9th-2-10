@@ -75,6 +75,19 @@ const ReservationsContent = ({
     });
   };
 
+  const allDelete = () => {
+    baskets.map(
+      v =>
+        v.idx === idx &&
+        dispatch({
+          type: 'DELETE_ITEM',
+          item: {
+            ...v,
+          },
+        }),
+    );
+  };
+
   return (
     <Card
       direction={{ base: 'column', sm: 'row' }}
@@ -151,6 +164,9 @@ const ReservationsContent = ({
             </Button>
           </Flex>
         </Flex>
+        <Button onClick={allDelete} backgroundColor='red.100'>
+          전체삭제
+        </Button>
         <Flex gap='1' flexDir='column'>
           <Text fontSize='sm' as='b'>
             상품금액
