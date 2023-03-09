@@ -1,22 +1,25 @@
-import React, { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
-import { travleContent } from 'types';
+import { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
+import { basketItem } from 'types';
 
 type Action =
-  | { type: 'ADD_ITEM'; item: travleContent }
-  | { type: 'DELETE_ITEM'; item: travleContent };
+  | { type: 'ADD_ITEM'; item: basketItem }
+  | { type: 'DELETE_ITEM'; item: basketItem }
+  | { type: 'CHANGE_COUNT'; item: basketItem };
 
 type ActionDispatch = Dispatch<Action>;
-type BasketState = travleContent[];
+type BasketState = basketItem[];
 export const BasketStateContext = createContext<BasketState | null>(null);
 export const BasketDispatchContext = createContext<ActionDispatch | null>(null);
 
-function reducer(state: travleContent[], action: Action): BasketState {
+function reducer(state: basketItem[], action: Action): BasketState {
   switch (action.type) {
     case 'ADD_ITEM':
-      const addData = [...state];
-      addData.push(action.item);
-      localStorage.setItem('shopping-basket', JSON.stringify(addData));
-      return addData;
+      if (!state.find(data => data.idx === action.item.idx)) {
+        const addData = [...state, action.item];
+        localStorage.setItem('shopping-basket', JSON.stringify(addData));
+        return addData;
+      }
+      return state;
     case 'DELETE_ITEM':
       const deleteData = [...state];
       deleteData.splice(
@@ -25,6 +28,15 @@ function reducer(state: travleContent[], action: Action): BasketState {
       );
       localStorage.setItem('shopping-basket', JSON.stringify(deleteData));
       return deleteData;
+    case 'CHANGE_COUNT':
+      const changeData = state.map(item => {
+        if (item.idx === action.item.idx) {
+          return { ...item, count: action.item.count };
+        }
+        return item;
+      });
+      localStorage.setItem('shopping-basket', JSON.stringify(changeData));
+      return changeData;
     default:
       throw new Error('Unhandleed Action');
   }
