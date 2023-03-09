@@ -1,31 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Box,
-  Button,
   ButtonGroup,
   Card,
   CardBody,
-  CardFooter,
-  CardHeader,
-  Center,
-  Divider,
-  Flex,
   Grid,
-  GridItem,
-  Heading,
   IconButton,
   Image,
-  Stack,
   Text,
-  useDisclosure,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  useMergeRefs,
+  Tag,
+  HStack,
 } from '@chakra-ui/react';
-import { PhoneIcon, AddIcon, WarningIcon, MinusIcon, CloseIcon } from '@chakra-ui/icons';
+import { AddIcon, MinusIcon, CloseIcon } from '@chakra-ui/icons';
 import { travleContent } from 'types';
 import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
 
@@ -41,8 +26,6 @@ const ReservationsContent = ({
 }: travleContent) => {
   const baskets = useBasketState();
   const dispatch = useBasketDispatch();
-
-  const [isMax, setIsMax] = useState(false);
   const [count, setCount] = useState<number>(0);
 
   const getCount = () => setCount(baskets.filter(e => e.idx === idx).length);
@@ -63,21 +46,29 @@ const ReservationsContent = ({
   }, [baskets]);
 
   const onAddItem = () => {
-    dispatch({
-      type: 'ADD_ITEM',
-      item: {
-        ...val,
-      },
-    });
+    if (count >= maximumPurchases) {
+      alert('최대 수량을 넘겨 담을 수 없습니다.');
+    } else {
+      dispatch({
+        type: 'ADD_ITEM',
+        item: {
+          ...val,
+        },
+      });
+    }
   };
 
   const onMinusItem = () => {
-    dispatch({
-      type: 'DELETE_ITEM',
-      item: {
-        ...val,
-      },
-    });
+    if (count <= 1) {
+      alert('최소 주문 수량은 1개 입니다.');
+    } else {
+      dispatch({
+        type: 'DELETE_ITEM',
+        item: {
+          ...val,
+        },
+      });
+    }
   };
 
   const allDelete = () => {
@@ -90,12 +81,22 @@ const ReservationsContent = ({
 
       <Grid templateColumns='repeat(2, 1fr)' paddingLeft={'3'} alignContent={'center'}>
         <CardBody width={'400px'}>
-          <Heading size={'sm'} fontSize='1.5rem' marginBottom={'8'}>
+          <Text fontSize={'2xl'} fontWeight={'bold'} marginBottom='2'>
             {name}
-          </Heading>
-          <Text fontSize='xl'>{price.toLocaleString('ko-KR')}원</Text>
+          </Text>
+          <HStack spacing={'4'} marginBottom='6'>
+            <Tag fontWeight={'bold'} size={'md'}>
+              {spaceCategory}
+            </Tag>
+            <Tag fontWeight={'bold'} size={'md'}>
+              남은 수량: {maximumPurchases - count}
+            </Tag>
+          </HStack>
+          <Text size='xl' fontSize={'1.5rem'} fontWeight='medium'>
+            {price.toLocaleString('ko-KR')}원
+          </Text>
         </CardBody>
-        <ButtonGroup>
+        <ButtonGroup alignItems={'center'}>
           <IconButton
             size='lg'
             icon={<AddIcon />}
@@ -104,7 +105,9 @@ const ReservationsContent = ({
             marginRight={'3'}
             onClick={onAddItem}
           />
-          <Text> {count}</Text>
+          <Text fontSize={'2xl'} fontWeight={'bold'} align={'center'} marginRight='3'>
+            {count}
+          </Text>
           <IconButton
             size='lg'
             icon={<MinusIcon />}

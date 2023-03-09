@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import { Box, Button, Card, CardBody, CardFooter, Grid, Heading, Text } from '@chakra-ui/react';
+import { Box, Button, Card, CardBody, Grid, Heading, Text } from '@chakra-ui/react';
 import MainLayout from 'components/MainLayout';
-import TravleContent from 'components/TravleContent';
 
-import { Link, Navigate, useLoaderData } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { travleContent } from 'types';
 import ReservationsContent from 'components/reservations/ReservationsContent';
 import { useBasketState } from 'components/context/BasketProvider';
-
-// const basket = getData ? (JSON.parse(getData || '') as travleContent[]) : null;
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 const ReservationPage = () => {
   const basket = useBasketState();
@@ -43,8 +41,9 @@ const ReservationPage = () => {
       <Grid templateColumns='1fr 400px'>
         <Box as='section'>
           <Link to='/main'>
-            <Button marginBottom={'3'} minW={'200px'}>
-              홈으로 돌아가기
+            <Button marginBottom={'3'} minW={'200px'} fontSize='m'>
+              <ArrowBackIcon boxSize={'1.5rem'} marginRight={'2'} />
+              <Text>홈으로 돌아가기</Text>
             </Button>
           </Link>
           <Grid templateColumns='repeat(1,1fr)' gap={10}>
@@ -57,13 +56,22 @@ const ReservationPage = () => {
             )}
           </Grid>
         </Box>
-        <Card marginLeft={'10'} maxH={'200px'} variant='outline' overflow='hidden'>
+
+        <Card marginLeft={'10'} maxH={'200px'} top={'52px'} variant='outline' overflow='hidden'>
           <CardBody>
             <Heading size={'md'} fontSize={'2rem'}>
               결제금액 : {totalPrice.toLocaleString('ko-KR')} 원{' '}
             </Heading>
           </CardBody>
-          <Button>결제하기</Button>
+          <Button
+            bgColor={'gray.700'}
+            color={'gray.100'}
+            colorScheme='blackAlpha'
+            minH='60px'
+            fontSize={'2xl'}
+          >
+            결제하기
+          </Button>
         </Card>
       </Grid>
     </MainLayout>
