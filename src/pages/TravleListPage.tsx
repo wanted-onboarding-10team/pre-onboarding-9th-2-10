@@ -2,9 +2,9 @@ import React from 'react';
 import { Box, Grid } from '@chakra-ui/react';
 import MainLayout from 'components/MainLayout';
 import TravleContent from 'components/TravleContent';
-
 import { useLoaderData } from 'react-router-dom';
 import { travleContent } from 'types';
+import ReservationsIcon from 'components/ReservationsIcon';
 
 const Main = () => {
   const data = useLoaderData() as travleContent[];
@@ -17,6 +17,7 @@ const Main = () => {
           ))}
         </Grid>
       </Box>
+      <ReservationsIcon />
     </MainLayout>
   );
 };

@@ -13,6 +13,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
       justifyContent='center'
       flexDirection={'column'}
       as={'main'}
+      position='relative'
     >
       {children}
     </Box>
