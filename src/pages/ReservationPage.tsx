@@ -1,10 +1,13 @@
 import {
+  Button,
   Checkbox,
+  Flex,
   Heading,
   Table,
   TableContainer,
   Tbody,
   Td,
+  Text,
   Tfoot,
   Th,
   Thead,
@@ -13,7 +16,9 @@ import {
 import { useBasketState } from 'components/context/BasketProvider';
 import MainLayout from 'components/MainLayout';
 import ReservationItem from 'components/ReservationItem';
+import { PATH_ROUTES } from 'constant';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const ReservationPage = () => {
   const basketDatas = useBasketState();
@@ -43,7 +48,7 @@ const ReservationPage = () => {
     <MainLayout>
       <Heading>장바구니</Heading>
       <TableContainer>
-        <Table variant='simple'>
+        <Table variant='simple' size='lg'>
           <Thead>
             <Tr>
               <Th>
@@ -60,16 +65,37 @@ const ReservationPage = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {basketDatas.map(travelData => {
-              return (
-                <ReservationItem
-                  key={travelData.idx}
-                  travelData={travelData}
-                  checkedItem={checkedItems[travelData.idx - 1]}
-                  handleItemChecked={handleItemChecked}
-                />
-              );
-            })}
+            {basketDatas.length > 0 ? (
+              basketDatas.map((travelData, index) => {
+                return (
+                  <ReservationItem
+                    key={travelData.idx}
+                    travelData={travelData}
+                    checkedItem={checkedItems[index]}
+                    handleItemChecked={handleItemChecked}
+                  />
+                );
+              })
+            ) : (
+              <Tr>
+                <Td colSpan={5} bg='gray.100'>
+                  <Flex
+                    minW='xl'
+                    textAlign={'center'}
+                    flexDirection='column'
+                    gap='5'
+                    alignItems='center'
+                    pt='4'
+                    pb='4'
+                  >
+                    <Text>장바구니에 담긴 상품이 없습니다.</Text>
+                    <Button as={Link} to={PATH_ROUTES.main} colorScheme='teal' variant='solid'>
+                      홈으로 이동하시겠습니까?
+                    </Button>
+                  </Flex>
+                </Td>
+              </Tr>
+            )}
           </Tbody>
           <Tfoot>
             <Tr>
