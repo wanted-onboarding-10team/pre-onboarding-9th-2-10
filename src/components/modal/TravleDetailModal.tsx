@@ -11,11 +11,7 @@ import {
   Stack,
   Box,
 } from '@chakra-ui/react';
-import { travleContent } from 'types';
-interface TravleDetailModalProps extends travleContent {
-  show: boolean;
-  close: () => void;
-}
+import { TravleDetailModalProps } from 'types';
 const TravleDetailModal = ({
   show,
   close,

@@ -1,4 +1,5 @@
 import { PATH_ROUTES } from 'constant';
+import ReservationPage from 'pages/ReservationsPage';
 import Root from 'pages/Root';
 import TravleListPage from 'pages/TravleListPage';
 import { createBrowserRouter } from 'react-router-dom';
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path: PATH_ROUTES.shopBasket,
-    element: <TravleListPage />,
+    element: <ReservationPage />,
   },
 ]);
 

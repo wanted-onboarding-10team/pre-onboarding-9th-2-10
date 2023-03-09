@@ -13,7 +13,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { travleContent } from 'types';
+import { TravleContentType } from 'types';
 import TravleDetailModal from 'components/modal/TravleDetailModal';
 import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
 
@@ -26,16 +26,15 @@ const TravleContent = ({
   price,
   maximumPurchases,
   registrationDate,
-}: travleContent) => {
+}: TravleContentType) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useBasketDispatch();
   const basket = useBasketState();
-  const [isMaximum, setIsMaximum] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
 
   useEffect(() => {
-    if (basket.filter(product => product.idx === idx).length >= maximumPurchases)
-      setIsMaximum(true);
-    else setIsMaximum(false);
+    if (basket.findIndex(product => product.idx === idx) !== -1) setIsAdded(true);
+    else setIsAdded(false);
   }, [basket]);
 
   const addItem = () => {
@@ -50,6 +49,7 @@ const TravleContent = ({
         price,
         maximumPurchases,
         registrationDate,
+        quantity: 1,
       },
     });
   };
@@ -69,7 +69,7 @@ const TravleContent = ({
         <Divider />
         <CardFooter>
           <ButtonGroup>
-            <Button colorScheme={'blue'} size='md' onClick={addItem} isDisabled={isMaximum}>
+            <Button colorScheme={'blue'} size='md' onClick={addItem} isDisabled={isAdded}>
               예약
             </Button>
             <Button colorScheme={'gray'} size='md' onClick={onOpen}>

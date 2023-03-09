@@ -1,13 +1,12 @@
 import React from 'react';
 import { Box, Grid } from '@chakra-ui/react';
+import { useLoaderData } from 'react-router-dom';
 import MainLayout from 'components/MainLayout';
 import TravleContent from 'components/TravleContent';
-
-import { useLoaderData } from 'react-router-dom';
-import { travleContent } from 'types';
+import { TravleContentType } from 'types';
 
 const Main = () => {
-  const data = useLoaderData() as travleContent[];
+  const data = useLoaderData() as TravleContentType[];
   return (
     <MainLayout>
       <Box as='section'>

@@ -1,17 +1,17 @@
 import React, { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
-import { travleContent } from 'types';
+import { TravleContentType } from 'types';
 
 type Action =
-  | { type: 'ADD_ITEM'; item: travleContent }
-  | { type: 'DELETE_ITEM'; item: travleContent }
-  | { type: 'UPDATE_ITEM'; item: travleContent; changeQuantity: number };
+  | { type: 'ADD_ITEM'; item: TravleContentType }
+  | { type: 'DELETE_ITEM'; item: TravleContentType }
+  | { type: 'UPDATE_ITEM'; item: TravleContentType; changeQuantity: number };
 
 type ActionDispatch = Dispatch<Action>;
-type BasketState = travleContent[];
+type BasketState = TravleContentType[];
 export const BasketStateContext = createContext<BasketState | null>(null);
 export const BasketDispatchContext = createContext<ActionDispatch | null>(null);
 
-function reducer(state: travleContent[], action: Action): BasketState {
+function reducer(state: BasketState, action: Action): BasketState {
   switch (action.type) {
     case 'ADD_ITEM':
       const addData = [...state];
