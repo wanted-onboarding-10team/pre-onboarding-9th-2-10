@@ -4,7 +4,8 @@ import React, { ReactNode } from 'react';
 const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
     <Box
-      maxWidth={1000}
+      maxWidth={'100vw'}
+      minHeight={'100vh'}
       margin='auto'
       paddingTop={100}
       paddingBottom={100}
