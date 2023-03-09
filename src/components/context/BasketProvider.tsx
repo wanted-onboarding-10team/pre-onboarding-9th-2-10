@@ -14,9 +14,14 @@ function reducer(state: travleContent[], action: Action): BasketState {
   switch (action.type) {
     case 'ADD_ITEM':
       const addData = [...state];
-      addData.push(action.item);
-      localStorage.setItem('shopping-basket', JSON.stringify(addData));
-      return addData;
+      const filteredReservations = addData.filter(
+        reservation => reservation.idx !== action.item.idx,
+      );
+      localStorage.setItem(
+        'shopping-basket',
+        JSON.stringify([...filteredReservations, action.item]),
+      );
+      return [...filteredReservations, action.item];
     case 'DELETE_ITEM':
       const deleteData = [...state];
       deleteData.splice(
