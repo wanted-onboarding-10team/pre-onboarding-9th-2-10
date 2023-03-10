@@ -80,18 +80,18 @@ $ npm start
 │  │  ├─ context
 │  │  │   └─ BasketProvider.tsx
 │  │  ├─ modal
-│  │  │   └─ TravleDetailModal.tsx
+│  │  │   └─ TravelDetailModal.tsx
 │  │  ├─ FilterContainer.tsx
 │  │  ├─ MainLayout.tsx
 │  │  ├─ NavBar.tsx
 │  │  ├─ ReservationItem.tsx
-│  │  └─ TravleContent.tsx
+│  │  └─ TravelContent.tsx
 │  ├─ constant
 │  │  └─ index.ts
 │  ├─ pages
 │  │  └─ ReservationPage.tsx
 │  │  └─ Root.tsx
-│  │  └─ TravleListPage.tsx
+│  │  └─ TravelListPage.tsx
 │  ├─ router
 │  │  ├─ loader
 │  │  │   ├─ mainLoader.ts
@@ -116,7 +116,6 @@ $ npm start
 | Refactor | 코드 리팩토링                                                                      |
 | Docs     | 문서 작업, 수정                                                                    |
 | Style    | 코드 스타일 및 포맷 변경(코드 자체의 변경은 없는 경우, 함수/ 변수명 변경 포함)     |
-| Test     | 테스트 코드 작성, 테스트 리팩토링(프로덕션 코드 변경 X)                            |
 | Chore    | 소스 코드를 건들지 않는 작업 - 빌드 테스트 업데이트, 패키지 매니저를 설정하는 경우 |
 | Rename   | 파일 혹은 폴더명을 수정하거나 옮기는 작업만 수행                                   |
 | Remove   | 파일을 삭제하는 작업만 수행                                                        |
