@@ -13,8 +13,8 @@ import {
   TagLabel,
   TagLeftIcon,
 } from '@chakra-ui/react';
-import { FilterItems } from 'pages/TravleListPage';
 import { useState } from 'react';
+import { FilterItems } from 'types';
 
 interface FilterContainerParam {
   defaultSpaceCategory: string[];

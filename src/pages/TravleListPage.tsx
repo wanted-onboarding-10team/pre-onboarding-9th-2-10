@@ -5,12 +5,7 @@ import TravleContent from 'components/TravleContent';
 import { useState } from 'react';
 
 import { useLoaderData } from 'react-router-dom';
-import { travleContent } from 'types';
-
-export interface FilterItems {
-  price: number[];
-  spaceCategory: string[];
-}
+import { FilterItems, travleContent } from 'types';
 
 const Main = () => {
   const data = useLoaderData() as travleContent[];

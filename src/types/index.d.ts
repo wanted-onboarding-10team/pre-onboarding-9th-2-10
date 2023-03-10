@@ -8,3 +8,7 @@ export interface travleContent {
   maximumPurchases: number;
   registrationDate: string;
 }
+export interface FilterItems {
+  price: number[];
+  spaceCategory: string[];
+}
