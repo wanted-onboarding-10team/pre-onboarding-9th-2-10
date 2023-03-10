@@ -1,7 +1,7 @@
 import React, { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
 import { travleContent } from 'types';
 
-export enum ActionName {
+export const enum ActionName {
   ADD_ITEM = 'ADD_ITEM',
   DELETE_ITEM = 'DELETE_ITEM',
 }

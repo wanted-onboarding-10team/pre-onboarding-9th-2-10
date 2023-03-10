@@ -51,29 +51,24 @@ const ReservationsContent = ({
     } else {
       dispatch({
         type: ActionName.ADD_ITEM,
-        item: {
-          ...val,
-        },
+        item: { ...val },
       });
     }
   };
 
   const onMinusItem = () => {
-    if (count <= 1) {
-      alert('최소 주문 수량은 1개 입니다.');
-    } else {
+    if (count <= 1) alert('최소 주문 수량은 1개 입니다.');
+    else {
       dispatch({
         type: ActionName.DELETE_ITEM,
-        item: {
-          ...val,
-        },
+        item: { ...val },
       });
     }
   };
 
   const allDelete = () => {
     baskets.forEach(
-      e => e.idx === idx && dispatch({ type: ActionName.DELETE_ITEM, item: { ...e } }),
+      data => data.idx === idx && dispatch({ type: ActionName.DELETE_ITEM, item: { ...data } }),
     );
   };
 

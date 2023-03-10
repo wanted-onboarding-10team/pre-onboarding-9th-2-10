@@ -16,23 +16,25 @@ const ReservationPage = () => {
   let idxCounterArr = [] as number[];
 
   useEffect(() => {
-    // SUM TOTAL PRICE & COUNT ITEM
     if (basket.length > 0) {
       const maxIdx = basket.sort((a, b) => a.idx - b.idx)[0].idx;
       idxCounterArr = new Array(maxIdx + 1).fill(0);
-
       let price = 0;
+
+      // SUM TOTAL PRICE & COUNT ITEM
       basket.forEach(el => {
         idxCounterArr[el.idx]++;
         price += el.price;
       });
       setTotalPrice(price);
 
-      const delDupleDataArr = [] as travleContent[];
-      basket.forEach(el => {
-        if (!delDupleDataArr.find(val => val.idx === el.idx)) delDupleDataArr.push(el);
-      });
-      setDupleData(delDupleDataArr);
+      // FILTERS DUPLICATE ITEM
+      setDupleData(
+        basket.reduce<travleContent[]>((arr, cur) => {
+          if (!arr.find(val => val.idx === cur.idx)) arr.push(cur);
+          return arr;
+        }, []),
+      );
     }
   }, [basket]);
 

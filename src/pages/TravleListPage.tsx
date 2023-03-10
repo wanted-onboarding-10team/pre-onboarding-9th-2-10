@@ -21,60 +21,60 @@ import { travleContent } from 'types';
 import { CheckIcon } from '@chakra-ui/icons';
 import { FilterBox, MyCustomTag } from './Styles';
 
-enum StateSelect {
-  ALL_SLELCT = '전체 선택하기',
-}
+const INNER_HTML = {
+  ALL_SLELCT: '전체 선택하기',
+} as const;
 
-const setSelectLocation = new Set();
-const priceRange = [0, 0];
+const setUserSelectLocation = new Set();
+const dataPriceRange = [0, 0];
 
 const Main = () => {
-  const data = useLoaderData() as travleContent[];
-  const [filteredData, setFilteredData] = useState(data);
-  const [locationArr, setLocationArr] = useState<string[]>([]);
-  const [minMaxPrice, setMinMaxPrice] = useState<number[]>([0, 0]);
+  const datas = useLoaderData() as travleContent[];
+
+  const [filteredDatas, setFilteredData] = useState(datas);
+  const [showLocationArr, setShowLocationArr] = useState<string[]>([]);
+  const [userMinMaxPrice, setUserMinMaxPrice] = useState<number[]>([0, 0]);
 
   useEffect(() => {
-    setLocationArr(
-      data.reduce<string[]>((acc, cur) => {
+    // DETERMINED SPACECATEGORY OF THE DATA
+    setShowLocationArr(
+      datas.reduce<string[]>((acc, cur) => {
         if (!acc.includes(cur.spaceCategory)) acc.push(cur.spaceCategory);
         return acc;
       }, []),
     );
   }, []);
 
-  let min = data[0].price;
-  let max = data[0].price;
-  data.forEach(e => {
-    if (e.price < min) min = e.price;
-    else if (e.price > max) max = e.price;
+  // DETERMINED MIN MAX PRICE OF THE DATA
+  let min = datas[0].price;
+  let max = datas[0].price;
+  datas.forEach(data => {
+    data.price < min ? (min = data.price) : (max = data.price);
   });
-  priceRange[0] = min;
-  priceRange[1] = max;
+  dataPriceRange[0] = min;
+  dataPriceRange[1] = max;
 
   useEffect(() => {
-    setMinMaxPrice([min, max]);
+    setUserMinMaxPrice([min, max]);
   }, []);
 
-  const onClick = (e: React.MouseEvent) => {
+  // FILTERING SPACECATEGORY
+  const onTagClick = (e: React.MouseEvent) => {
     const element = e.target as HTMLElement;
-    if (element.innerHTML === StateSelect.ALL_SLELCT) {
-      locationArr.forEach(e => setSelectLocation.add(e));
+    if (element.innerHTML === INNER_HTML.ALL_SLELCT) {
+      showLocationArr.forEach(e => setUserSelectLocation.add(e));
     } else {
-      setSelectLocation.has(element.innerHTML)
-        ? setSelectLocation.delete(element.innerHTML)
-        : setSelectLocation.add(element.innerHTML);
+      setUserSelectLocation.has(element.innerHTML)
+        ? setUserSelectLocation.delete(element.innerHTML)
+        : setUserSelectLocation.add(element.innerHTML);
     }
-
-    const filtered = data.filter(cur => setSelectLocation.has(cur.spaceCategory));
-
-    setFilteredData(filtered);
+    setFilteredData(datas.filter(cur => setUserSelectLocation.has(cur.spaceCategory)));
   };
 
   const onChange = (e: number[]) => {
     const [min, max] = e;
-    setFilteredData(data.filter(e => e.price >= min && e.price <= max));
-    setMinMaxPrice([min, max]);
+    setFilteredData(datas.filter(e => e.price >= min && e.price <= max));
+    setUserMinMaxPrice([min, max]);
   };
 
   return (
@@ -84,19 +84,19 @@ const Main = () => {
           위치 필터
         </Heading>
         <HStack spacing={4} marginBottom={'20px'}>
-          {locationArr.map(e => {
+          {showLocationArr.map(location => {
             return (
               <MyCustomTag
-                key={e}
-                bg={setSelectLocation.has(e) ? 'gray.400' : 'gray.200'}
-                onClick={e => onClick(e)}
+                key={location}
+                bg={setUserSelectLocation.has(location) ? 'gray.400' : 'gray.200'}
+                onClick={location => onTagClick(location)}
               >
-                {e}
+                {location}
               </MyCustomTag>
             );
           })}
-          <MyCustomTag bg={'gray.200'} onClick={e => onClick(e)}>
-            {StateSelect.ALL_SLELCT}
+          <MyCustomTag bg={'gray.200'} onClick={e => onTagClick(e)}>
+            {INNER_HTML.ALL_SLELCT}
           </MyCustomTag>
         </HStack>
         <Divider marginBottom={'8'} />
@@ -105,25 +105,30 @@ const Main = () => {
         </Heading>
         <RangeSlider
           aria-label={['min', 'max']}
-          defaultValue={[priceRange[0], priceRange[1]]}
-          min={priceRange[0]}
-          max={priceRange[1]}
+          defaultValue={[dataPriceRange[0], dataPriceRange[1]]}
+          min={dataPriceRange[0]}
+          max={dataPriceRange[1]}
           step={1000}
           marginTop={'20px'}
           marginBottom={'20px'}
           onChange={e => onChange(e)}
         >
-          <RangeSliderMark value={priceRange[0]} mt='4' ml='-2.5' fontSize='sm'>
-            {priceRange[0].toLocaleString()}
-          </RangeSliderMark>
-          <RangeSliderMark value={priceRange[0] + priceRange[1] / 2} mt='4' ml='-9' fontSize='sm'>
-            {(priceRange[0] + priceRange[1] / 2).toLocaleString()}
-          </RangeSliderMark>
-          <RangeSliderMark value={priceRange[1]} mt='4' ml='-2.5' fontSize='sm'>
-            {priceRange[1].toLocaleString()}
+          <RangeSliderMark value={dataPriceRange[0]} mt='4' ml='-2.5' fontSize='sm'>
+            {dataPriceRange[0].toLocaleString()}
           </RangeSliderMark>
           <RangeSliderMark
-            value={minMaxPrice[0]}
+            value={dataPriceRange[0] + dataPriceRange[1] / 2}
+            mt='4'
+            ml='-9'
+            fontSize='sm'
+          >
+            {(dataPriceRange[0] + dataPriceRange[1] / 2).toLocaleString()}
+          </RangeSliderMark>
+          <RangeSliderMark value={dataPriceRange[1]} mt='4' ml='-2.5' fontSize='sm'>
+            {dataPriceRange[1].toLocaleString()}
+          </RangeSliderMark>
+          <RangeSliderMark
+            value={userMinMaxPrice[0]}
             textAlign='center'
             bg='gray.500'
             color='white'
@@ -131,10 +136,10 @@ const Main = () => {
             ml='-5'
             w='12'
           >
-            {minMaxPrice[0]}
+            {userMinMaxPrice[0]}
           </RangeSliderMark>
           <RangeSliderMark
-            value={minMaxPrice[1]}
+            value={userMinMaxPrice[1]}
             textAlign='center'
             bg='gray.500'
             color='white'
@@ -142,7 +147,7 @@ const Main = () => {
             ml='-5'
             w='12'
           >
-            {minMaxPrice[1]}
+            {userMinMaxPrice[1]}
           </RangeSliderMark>
           <RangeSliderTrack bg='gray.300'>
             <RangeSliderFilledTrack bg='gray.500' />
@@ -159,7 +164,7 @@ const Main = () => {
           </Button>
         </Link>
         <Grid templateColumns='repeat(2,1fr)' gap={10}>
-          {filteredData.map(product => (
+          {filteredDatas.map(product => (
             <TravleContent {...product} key={product.idx} />
           ))}
         </Grid>
