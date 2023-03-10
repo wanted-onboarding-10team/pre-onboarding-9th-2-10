@@ -11,12 +11,12 @@ import {
   Stack,
   Box,
 } from '@chakra-ui/react';
-import { travleContent } from 'types';
-interface TravleDetailModalProps extends travleContent {
+import { travelContent } from 'types';
+interface TravelDetailModalProps extends travelContent {
   show: boolean;
   close: () => void;
 }
-const TravleDetailModal = ({
+const TravelDetailModal = ({
   show,
   close,
   idx,
@@ -27,7 +27,7 @@ const TravleDetailModal = ({
   price,
   maximumPurchases,
   registrationDate,
-}: TravleDetailModalProps) => {
+}: TravelDetailModalProps) => {
   return (
     <Modal isOpen={show} onClose={close}>
       <ModalOverlay />
@@ -54,4 +54,4 @@ const TravleDetailModal = ({
   );
 };
 
-export default TravleDetailModal;
+export default TravelDetailModal;

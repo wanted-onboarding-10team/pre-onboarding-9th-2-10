@@ -13,12 +13,12 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { travleContent } from 'types';
-import TravleDetailModal from 'components/modal/TravleDetailModal';
+import { travelContent } from 'types';
+import TravelDetailModal from 'components/modal/TravelDetailModal';
 import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
 import { ActionType } from 'types/enum';
 
-const TravleContent = ({
+const TravelContent = ({
   idx,
   name,
   mainImage,
@@ -27,7 +27,7 @@ const TravleContent = ({
   price,
   maximumPurchases,
   registrationDate,
-}: travleContent) => {
+}: travelContent) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useBasketDispatch();
   const basket = useBasketState();
@@ -81,7 +81,7 @@ const TravleContent = ({
           </ButtonGroup>
         </CardFooter>
       </Card>
-      <TravleDetailModal
+      <TravelDetailModal
         show={isOpen}
         close={onClose}
         idx={idx}
@@ -97,4 +97,4 @@ const TravleContent = ({
   );
 };
 
-export default TravleContent;
+export default TravelContent;

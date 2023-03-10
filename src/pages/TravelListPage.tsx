@@ -1,16 +1,16 @@
 import { Box, Button, Collapse, Container, Grid, Text, useDisclosure } from '@chakra-ui/react';
 import FilterContainer from 'components/FilterContainer';
 import MainLayout from 'components/MainLayout';
-import TravleContent from 'components/TravleContent';
+import TravelContent from 'components/TravelContent';
 import { useState } from 'react';
 
 import { useLoaderData } from 'react-router-dom';
-import { FilterItems, travleContent } from 'types';
+import { FilterItems, travelContent } from 'types';
 
 const dataPriceRange = [0, 0];
 
 const Main = () => {
-  const data = useLoaderData() as travleContent[];
+  const data = useLoaderData() as travelContent[];
   const spaceCategoryData = Array.from(
     data.reduce((arr, currData) => arr.add(currData.spaceCategory), new Set<string>()),
   );
@@ -80,7 +80,7 @@ const Main = () => {
         <Text>총 상품 수: {travelContentsView.length}</Text>
         <Grid templateColumns='repeat(2,1fr)' gap={10}>
           {travelContentsView.map(product => (
-            <TravleContent {...product} key={product.idx} />
+            <TravelContent {...product} key={product.idx} />
           ))}
         </Grid>
       </Box>
