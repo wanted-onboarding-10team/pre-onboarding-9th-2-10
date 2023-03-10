@@ -12,6 +12,7 @@ import {
   Tag,
   Heading,
   Divider,
+  RangeSliderMark,
 } from '@chakra-ui/react';
 import MainLayout from 'components/MainLayout';
 import TravleContent from 'components/TravleContent';
@@ -19,6 +20,7 @@ import TravleContent from 'components/TravleContent';
 import { useLoaderData, Link } from 'react-router-dom';
 import { travleContent } from 'types';
 import { CheckIcon } from '@chakra-ui/icons';
+import { FilterBox, MyCustomTag } from './Styles';
 
 enum StateSelect {
   ALL_SLELCT = '전체 선택하기',
@@ -78,52 +80,29 @@ const Main = () => {
 
   return (
     <MainLayout>
-      <Box
-        width={'725.33px'}
-        zIndex={2}
-        position={'fixed'}
-        borderWidth='1px'
-        borderRadius='lg'
-        background={'white'}
-        minH={'180px'}
-        top={'20px'}
-        padding={'10px 100px'}
-        shadow={'3px 3px 5px #cacaca5c'}
-      >
+      <FilterBox>
         <Heading fontSize={'2xl'} marginTop={'10px'} marginBottom={'10px'}>
           필터
         </Heading>
         <HStack spacing={4} marginBottom={'20px'}>
           {locationArr.map(e => {
             return (
-              <Tag
+              <MyCustomTag
                 key={e}
-                size={'lg'}
-                variant='subtle'
-                colorScheme='blackAlpha'
                 bg={setSelectLocation.has(e) ? 'gray.400' : 'gray.200'}
                 onClick={e => onClick(e)}
-                cursor={'pointer'}
-                fontWeight='black'
               >
                 {e}
-              </Tag>
+              </MyCustomTag>
             );
           })}
-          <Tag
-            size={'lg'}
-            variant='subtle'
-            colorScheme='blackAlpha'
-            bg={'gray.200'}
-            fontWeight='black'
-            cursor={'pointer'}
-            onClick={e => onClick(e)}
-          >
+          <MyCustomTag bg={'gray.200'} onClick={e => onClick(e)}>
             {StateSelect.ALL_SLELCT}
-          </Tag>
+          </MyCustomTag>
         </HStack>
         <Divider />
         <RangeSlider
+          aria-label={['min', 'max']}
           defaultValue={[priceRange[0], priceRange[1]]}
           min={priceRange[0]}
           max={priceRange[1]}
@@ -131,21 +110,46 @@ const Main = () => {
           marginTop={'20px'}
           onChange={e => onChange(e)}
         >
-          <RangeSliderTrack>
-            <RangeSliderFilledTrack />
-          </RangeSliderTrack>
-          <RangeSliderThumb boxSize={10} index={0}>
+          <RangeSliderMark value={priceRange[0]} mt='1' ml='-2.5' fontSize='sm'>
+            {priceRange[0].toLocaleString()}
+          </RangeSliderMark>
+          <RangeSliderMark value={priceRange[0] + priceRange[1] / 2} mt='1' ml='-2.5' fontSize='sm'>
+            {(priceRange[0] + priceRange[1] / 2).toLocaleString()}
+          </RangeSliderMark>
+          <RangeSliderMark value={priceRange[1]} mt='1' ml='-2.5' fontSize='sm'>
+            {priceRange[1].toLocaleString()}
+          </RangeSliderMark>
+          <RangeSliderMark
+            value={minMaxPrice[0]}
+            textAlign='center'
+            bg='gray.500'
+            color='white'
+            mt='-10'
+            ml='-5'
+            w='12'
+          >
             {minMaxPrice[0]}
-          </RangeSliderThumb>
-          <RangeSliderThumb boxSize={8} index={1}>
+          </RangeSliderMark>
+          <RangeSliderMark
+            value={minMaxPrice[1]}
+            textAlign='center'
+            bg='gray.500'
+            color='white'
+            mt='-10'
+            ml='-5'
+            w='12'
+          >
             {minMaxPrice[1]}
-          </RangeSliderThumb>
+          </RangeSliderMark>
+          <RangeSliderTrack bg='gray.300'>
+            <RangeSliderFilledTrack bg='gray.500' />
+          </RangeSliderTrack>
+          <RangeSliderThumb boxSize={6} index={0} />
+          <RangeSliderThumb boxSize={6} index={1} />
         </RangeSlider>
-        <HStack spacing='400px'>
-          <Text minW={'20'}>{priceRange[0].toLocaleString() + '원'}</Text>
-          <Text minW={'20'}>{priceRange[1].toLocaleString() + '원'}</Text>
-        </HStack>
-      </Box>
+        {/* <MyCustomRangeSlider onChange={e => onChange(e)} priceRange={priceRange} /> */}
+        <HStack spacing='400px'></HStack>
+      </FilterBox>
       <Box as='section' marginTop={'120px'}>
         <Link to='/reservations'>
           <Button marginBottom={'3'} minW={'200px'} fontSize='m'>
