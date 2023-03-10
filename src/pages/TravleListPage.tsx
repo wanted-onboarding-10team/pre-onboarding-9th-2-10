@@ -11,6 +11,7 @@ import {
   RangeSliderThumb,
   Tag,
   Heading,
+  Divider,
 } from '@chakra-ui/react';
 import MainLayout from 'components/MainLayout';
 import TravleContent from 'components/TravleContent';
@@ -19,13 +20,18 @@ import { useLoaderData, Link } from 'react-router-dom';
 import { travleContent } from 'types';
 import { CheckIcon } from '@chakra-ui/icons';
 
+enum StateSelect {
+  ALL_SLELCT = '전체 선택하기',
+}
+
 const setSelectLocation = new Set();
+const priceRange = [0, 0];
 
 const Main = () => {
   const data = useLoaderData() as travleContent[];
-
   const [filteredData, setFilteredData] = useState(data);
   const [locationArr, setLocationArr] = useState<string[]>([]);
+  const [minMaxPrice, setMinMaxPrice] = useState<number[]>([0, 0]);
 
   useEffect(() => {
     setLocationArr(
@@ -36,16 +42,38 @@ const Main = () => {
     );
   }, []);
 
+  let min = data[0].price;
+  let max = data[0].price;
+  data.forEach(e => {
+    if (e.price < min) min = e.price;
+    else if (e.price > max) max = e.price;
+  });
+  priceRange[0] = min;
+  priceRange[1] = max;
+
+  useEffect(() => {
+    setMinMaxPrice([min, max]);
+  }, []);
+
   const onClick = (e: React.MouseEvent) => {
     const element = e.target as HTMLElement;
-
-    setSelectLocation.has(element.innerHTML)
-      ? setSelectLocation.delete(element.innerHTML)
-      : setSelectLocation.add(element.innerHTML);
+    if (element.innerHTML === StateSelect.ALL_SLELCT) {
+      locationArr.forEach(e => setSelectLocation.add(e));
+    } else {
+      setSelectLocation.has(element.innerHTML)
+        ? setSelectLocation.delete(element.innerHTML)
+        : setSelectLocation.add(element.innerHTML);
+    }
 
     const filtered = data.filter(cur => setSelectLocation.has(cur.spaceCategory));
 
     setFilteredData(filtered);
+  };
+
+  const onChange = (e: number[]) => {
+    const [min, max] = e;
+    setFilteredData(data.filter(e => e.price >= min && e.price <= max));
+    setMinMaxPrice([min, max]);
   };
 
   return (
@@ -57,7 +85,7 @@ const Main = () => {
         borderWidth='1px'
         borderRadius='lg'
         background={'white'}
-        minH={'150px'}
+        minH={'180px'}
         top={'20px'}
         padding={'10px 100px'}
         shadow={'3px 3px 5px #cacaca5c'}
@@ -65,7 +93,7 @@ const Main = () => {
         <Heading fontSize={'2xl'} marginTop={'10px'} marginBottom={'10px'}>
           필터
         </Heading>
-        <HStack spacing={4}>
+        <HStack spacing={4} marginBottom={'20px'}>
           {locationArr.map(e => {
             return (
               <Tag
@@ -82,14 +110,41 @@ const Main = () => {
               </Tag>
             );
           })}
+          <Tag
+            size={'lg'}
+            variant='subtle'
+            colorScheme='blackAlpha'
+            bg={'gray.200'}
+            fontWeight='black'
+            cursor={'pointer'}
+            onClick={e => onClick(e)}
+          >
+            {StateSelect.ALL_SLELCT}
+          </Tag>
         </HStack>
-        <RangeSlider defaultValue={[120, 240]} min={0} max={300} step={30} marginTop={'20px'}>
+        <Divider />
+        <RangeSlider
+          defaultValue={[priceRange[0], priceRange[1]]}
+          min={priceRange[0]}
+          max={priceRange[1]}
+          step={1000}
+          marginTop={'20px'}
+          onChange={e => onChange(e)}
+        >
           <RangeSliderTrack>
             <RangeSliderFilledTrack />
           </RangeSliderTrack>
-          <RangeSliderThumb boxSize={6} index={0} />
-          <RangeSliderThumb boxSize={6} index={1} />
+          <RangeSliderThumb boxSize={10} index={0}>
+            {minMaxPrice[0]}
+          </RangeSliderThumb>
+          <RangeSliderThumb boxSize={8} index={1}>
+            {minMaxPrice[1]}
+          </RangeSliderThumb>
         </RangeSlider>
+        <HStack spacing='400px'>
+          <Text minW={'20'}>{priceRange[0].toLocaleString() + '원'}</Text>
+          <Text minW={'20'}>{priceRange[1].toLocaleString() + '원'}</Text>
+        </HStack>
       </Box>
       <Box as='section' marginTop={'120px'}>
         <Link to='/reservations'>
