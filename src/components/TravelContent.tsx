@@ -36,7 +36,6 @@ const TravelContent = ({
     else setIsMaximum(false);
   }, [basket]);
 
-
   const addItem = (e: any) => {
     e.stopPropagation();
     if (basket.findIndex(product => product.idx === idx) !== -1) {
@@ -99,7 +98,6 @@ const TravelContent = ({
         description={description}
       />
     </Card>
-
   );
 };
 
