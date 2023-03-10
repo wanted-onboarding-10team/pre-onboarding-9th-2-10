@@ -12,10 +12,10 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
         paddingTop={100}
         paddingBottom={100}
         display='flex'
-        alignItems={'center'}
+        alignItems='center'
         justifyContent='center'
-        flexDirection={'column'}
-        as={'main'}
+        flexDirection='column'
+        as='main'
       >
         {children}
       </Box>

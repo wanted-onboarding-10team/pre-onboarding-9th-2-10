@@ -81,7 +81,7 @@ const ReservationPage = () => {
                 <Td colSpan={5} bg='gray.100'>
                   <Flex
                     minW='xl'
-                    textAlign={'center'}
+                    textAlign='center'
                     flexDirection='column'
                     gap='5'
                     alignItems='center'
