@@ -16,6 +16,7 @@ import {
 import { travleContent } from 'types';
 import TravleDetailModal from 'components/modal/TravleDetailModal';
 import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
+import { ActionType } from 'types/enum';
 
 const TravleContent = ({
   idx,
@@ -39,8 +40,11 @@ const TravleContent = ({
   }, [basket]);
 
   const addItem = () => {
+    if (basket.findIndex(product => product.idx === idx) !== -1) {
+      return alert('이미 장바구니에 담겨있습니다');
+    }
     dispatch({
-      type: 'ADD_ITEM',
+      type: ActionType.ADD_ITEM,
       item: {
         idx,
         name,
@@ -50,15 +54,16 @@ const TravleContent = ({
         count: 1,
       },
     });
+    alert('예약에 성공하였습니다');
   };
 
   return (
     <GridItem>
-      <Card maxW={'sm'} variant='outline'>
+      <Card maxW='sm' variant='outline'>
         <CardBody>
-          <Image src={mainImage} alt='product image' fit={'fill'} htmlWidth='100%' />
+          <Image src={mainImage} alt='product image' fit='fill' htmlWidth='100%' />
           <Stack mt={6} spacing={3}>
-            <Heading size={'sm'}>{name}</Heading>
+            <Heading size='sm'>{name}</Heading>
             <Text>상품번호:{idx}</Text>
             <Text>사용가능 지역:{spaceCategory}</Text>
             <Text fontSize='2xl'>{price.toLocaleString('ko-KR')}원</Text>
@@ -67,10 +72,10 @@ const TravleContent = ({
         <Divider />
         <CardFooter>
           <ButtonGroup>
-            <Button colorScheme={'blue'} size='md' onClick={addItem} isDisabled={isMaximum}>
+            <Button colorScheme='blue' size='md' onClick={addItem} isDisabled={isMaximum}>
               예약
             </Button>
-            <Button colorScheme={'gray'} size='md' onClick={onOpen}>
+            <Button colorScheme='gray' size='md' onClick={onOpen}>
               상세보기
             </Button>
           </ButtonGroup>
