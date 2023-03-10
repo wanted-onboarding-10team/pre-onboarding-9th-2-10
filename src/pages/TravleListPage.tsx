@@ -48,8 +48,9 @@ const Main = () => {
   // DETERMINED MIN MAX PRICE OF THE DATA
   let min = datas[0].price;
   let max = datas[0].price;
-  datas.forEach(data => {
-    data.price < min ? (min = data.price) : (max = data.price);
+  datas.forEach(e => {
+    if (e.price < min) min = e.price;
+    else if (e.price > max) max = e.price;
   });
   dataPriceRange[0] = min;
   dataPriceRange[1] = max;
