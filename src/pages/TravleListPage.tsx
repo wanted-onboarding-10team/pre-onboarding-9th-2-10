@@ -1,6 +1,7 @@
 import { Box, Button, Collapse, Container, Grid, Text, useDisclosure } from '@chakra-ui/react';
 import FilterContainer from 'components/FilterContainer';
 import MainLayout from 'components/MainLayout';
+import ReservationsIcon from 'components/ReservationsIcon';
 import TravleContent from 'components/TravleContent';
 import { useState } from 'react';
 
@@ -77,13 +78,13 @@ const Main = () => {
         </Collapse>
       </Container>
       <Box as='section' mt='5'>
-        <Text>총 상품 수: {travelContentsView.length}</Text>
         <Grid templateColumns='repeat(2,1fr)' gap={10}>
           {travelContentsView.map(product => (
             <TravleContent {...product} key={product.idx} />
           ))}
         </Grid>
       </Box>
+      <ReservationsIcon count={travelContentsView.length} />
     </MainLayout>
   );
 };
