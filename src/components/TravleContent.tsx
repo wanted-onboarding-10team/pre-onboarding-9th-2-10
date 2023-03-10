@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   Button,
@@ -45,11 +46,9 @@ const TravleContent = ({
         idx,
         name,
         mainImage,
-        description,
-        spaceCategory,
         price,
         maximumPurchases,
-        registrationDate,
+        count: 1,
       },
     });
   };
