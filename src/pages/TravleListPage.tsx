@@ -30,7 +30,7 @@ const Main = () => {
 
   const getFilteredData = () => {
     const { price, spaceCategory } = filterItems;
-    const isPriceFilter = price[0] !== 0 && price[1] !== 100;
+    const isPriceFilter = price[0] !== 0 || price[1] !== 100;
     const isSpaceCategoryFilter = spaceCategory.length > 0;
     if (isPriceFilter && isSpaceCategoryFilter) {
       return data.filter(content => {
