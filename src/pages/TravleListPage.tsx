@@ -9,8 +9,12 @@ const Main = () => {
   const mockData = useLoaderData() as travleContent[];
   const [data, setData] = useState<travleContent[]>(mockData);
   const [categoryFilters, setCategoryFilters] = useState<string[]>([]);
-  const [min, setMin] = useState<number>(0);
-  const [max, setMax] = useState<number>(30000);
+  const PRICE_LIMIT = {
+    min: 0,
+    max: 30000,
+  };
+  const [min, setMin] = useState<number>(PRICE_LIMIT.min);
+  const [max, setMax] = useState<number>(PRICE_LIMIT.max);
 
   const filter = () => {
     const priceFilterData = mockData.filter(v => v.price >= min && v.price <= max);
@@ -28,8 +32,8 @@ const Main = () => {
   };
 
   const dataReset = () => {
-    setMin(0);
-    setMax(30000);
+    setMin(PRICE_LIMIT.min);
+    setMax(PRICE_LIMIT.max);
     setCategoryFilters([]);
   };
 
@@ -39,27 +43,32 @@ const Main = () => {
 
   return (
     <MainLayout>
-      <form onReset={dataReset}>
-        <Input onChange={e => setMin(Number(e.target.value))} width='140px' defaultValue={min} /> ~
-        <Input onChange={e => setMax(Number(e.target.value))} width='140px' defaultValue={max} />원
-        <Button isDisabled={min >= max} onClick={filter} colorScheme='red'></Button>
-        <Button onClick={dataReset} type='reset'>
-          초기화
-        </Button>
-      </form>
-
-      <Flex direction='column'>
-        {['서울', '강원', '부산', '대구', '제주'].map(v => (
-          <div key={v}>
-            <Checkbox
-              value={v}
-              onChange={handleCategoryFilterChange}
-              isChecked={categoryFilters.includes(v)}
-            />
-            {v}
-          </div>
-        ))}
-      </Flex>
+      <div>
+        <Flex direction='column'>
+          {['서울', '강원', '부산', '대구', '제주'].map(v => (
+            <div key={v}>
+              <Checkbox
+                value={v}
+                onChange={handleCategoryFilterChange}
+                isChecked={categoryFilters.includes(v)}
+              />
+              {v}
+            </div>
+          ))}
+        </Flex>
+        <form onReset={dataReset}>
+          <Input onChange={e => setMin(Number(e.target.value))} width='140px' defaultValue={min} />{' '}
+          ~
+          <Input onChange={e => setMax(Number(e.target.value))} width='140px' defaultValue={max} />
+          원
+          <Button isDisabled={min >= max} onClick={filter} colorScheme='red'>
+            검색
+          </Button>
+          <Button onClick={dataReset} type='reset'>
+            초기화
+          </Button>
+        </form>
+      </div>
 
       <Box as='section'>
         <Grid templateColumns='repeat(2,1fr)' gap={10}>
