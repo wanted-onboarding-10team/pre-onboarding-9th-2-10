@@ -15,61 +15,53 @@ import {
   Tag,
   TagLabel,
   TagLeftIcon,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import MainLayout from 'components/MainLayout';
 import TravleContent from 'components/TravleContent';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useLoaderData } from 'react-router-dom';
 import { travleContent } from 'types';
 
 const Main = () => {
   const data = useLoaderData() as travleContent[];
-
-  const { isOpen, onToggle } = useDisclosure();
-  const [sliderValue, setSliderValue] = useState([0, 100]);
-  const [isFilter, setIsFilter] = useState(false);
-  const isFilterPrice = sliderValue[0] !== 0 || sliderValue[1] !== 100;
   const spaceCategoryData = Array.from(
     data.reduce((arr, currData) => arr.add(currData.spaceCategory), new Set<string>()),
   );
 
-  const [spaceCategoriesFilter, setSpaceCatoriesFilter] = useState<string[]>([]);
-  const isSpaceCategoriesFilter = spaceCategoriesFilter.length === 0;
+  const { isOpen, onToggle } = useDisclosure();
+  const [sliderValue, setSliderValue] = useState([0, 100]);
+  const isFilterPrice = sliderValue[0] !== 0 || sliderValue[1] !== 100;
+
+  const [spaceCategoriesFilter, setSpaceCatoriesFilter] = useState<string[]>(spaceCategoryData);
+  const isSpaceCategoriesFilter = spaceCategoriesFilter.length !== 0;
   const getFilteredData = () => {
-    if (isFilter) {
-      if (isFilterPrice && isSpaceCategoriesFilter) {
-        return data.filter(content => {
-          const price = content.price / 1000;
-          return sliderValue[0] <= price &&
-            price <= sliderValue[1] &&
-            spaceCategoriesFilter.includes(content.spaceCategory)
-            ? content
-            : null;
-        });
-      } else if (isFilterPrice) {
-        return data.filter(content => {
-          const price = content.price / 1000;
-          return sliderValue[0] <= price && price <= sliderValue[1] ? content : null;
-        });
-      } else if (isSpaceCategoriesFilter) {
-        return data.filter(content =>
-          spaceCategoriesFilter.includes(content.spaceCategory) ? content : null,
-        );
-      }
+    debugger;
+    if (isFilterPrice && isSpaceCategoriesFilter) {
+      return data.filter(content => {
+        const price = content.price / 1000;
+        return sliderValue[0] <= price &&
+          price <= sliderValue[1] &&
+          spaceCategoriesFilter.includes(content.spaceCategory)
+          ? content
+          : null;
+      });
+    } else if (isFilterPrice) {
+      return data.filter(content => {
+        const price = content.price / 1000;
+        return sliderValue[0] <= price && price <= sliderValue[1] ? content : null;
+      });
+    } else if (isSpaceCategoriesFilter) {
+      return data.filter(content =>
+        spaceCategoriesFilter.includes(content.spaceCategory) ? content : null,
+      );
     }
     return data;
   };
 
   const travelContentsView = getFilteredData();
-
-  useEffect(() => {
-    if (!isFilter) {
-      setSpaceCatoriesFilter([]);
-      setSliderValue([0, 100]);
-    }
-  }, [isFilter]);
 
   const addCategory = (space: string) => {
     !spaceCategoriesFilter.includes(space) &&
@@ -166,10 +158,10 @@ const Main = () => {
               ))}
             </Box>
           </Box>
-          <Button onClick={() => setIsFilter(!isFilter)}>필터 {isFilter ? '취소' : '적용'}</Button>
         </Collapse>
       </Container>
       <Box as='section'>
+        <Text>총 상품 수: {travelContentsView.length}</Text>
         <Grid templateColumns='repeat(2,1fr)' gap={10}>
           {travelContentsView.map(product => (
             <TravleContent {...product} key={product.idx} />
