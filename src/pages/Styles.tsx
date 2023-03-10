@@ -6,7 +6,6 @@ export const FilterBox = ({ children }: { children: ReactNode }) => {
     <Box
       width={'725.33px'}
       zIndex={2}
-      position={'fixed'}
       borderWidth='1px'
       borderRadius='lg'
       background={'white'}

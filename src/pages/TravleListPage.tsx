@@ -9,7 +9,6 @@ import {
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-  Tag,
   Heading,
   Divider,
   RangeSliderMark,
@@ -82,7 +81,7 @@ const Main = () => {
     <MainLayout>
       <FilterBox>
         <Heading fontSize={'2xl'} marginTop={'10px'} marginBottom={'10px'}>
-          필터
+          위치 필터
         </Heading>
         <HStack spacing={4} marginBottom={'20px'}>
           {locationArr.map(e => {
@@ -100,7 +99,10 @@ const Main = () => {
             {StateSelect.ALL_SLELCT}
           </MyCustomTag>
         </HStack>
-        <Divider />
+        <Divider marginBottom={'8'} />
+        <Heading fontSize={'2xl'} marginTop={'10px'} marginBottom={'15px'}>
+          금액 필터
+        </Heading>
         <RangeSlider
           aria-label={['min', 'max']}
           defaultValue={[priceRange[0], priceRange[1]]}
@@ -108,15 +110,16 @@ const Main = () => {
           max={priceRange[1]}
           step={1000}
           marginTop={'20px'}
+          marginBottom={'20px'}
           onChange={e => onChange(e)}
         >
-          <RangeSliderMark value={priceRange[0]} mt='1' ml='-2.5' fontSize='sm'>
+          <RangeSliderMark value={priceRange[0]} mt='4' ml='-2.5' fontSize='sm'>
             {priceRange[0].toLocaleString()}
           </RangeSliderMark>
-          <RangeSliderMark value={priceRange[0] + priceRange[1] / 2} mt='1' ml='-2.5' fontSize='sm'>
+          <RangeSliderMark value={priceRange[0] + priceRange[1] / 2} mt='4' ml='-9' fontSize='sm'>
             {(priceRange[0] + priceRange[1] / 2).toLocaleString()}
           </RangeSliderMark>
-          <RangeSliderMark value={priceRange[1]} mt='1' ml='-2.5' fontSize='sm'>
+          <RangeSliderMark value={priceRange[1]} mt='4' ml='-2.5' fontSize='sm'>
             {priceRange[1].toLocaleString()}
           </RangeSliderMark>
           <RangeSliderMark
@@ -147,10 +150,8 @@ const Main = () => {
           <RangeSliderThumb boxSize={6} index={0} />
           <RangeSliderThumb boxSize={6} index={1} />
         </RangeSlider>
-        {/* <MyCustomRangeSlider onChange={e => onChange(e)} priceRange={priceRange} /> */}
-        <HStack spacing='400px'></HStack>
       </FilterBox>
-      <Box as='section' marginTop={'120px'}>
+      <Box as='section' marginTop={'40px'}>
         <Link to='/reservations'>
           <Button marginBottom={'3'} minW={'200px'} fontSize='m'>
             <CheckIcon boxSize={'1.5rem'} marginRight={'2'} />
