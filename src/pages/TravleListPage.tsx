@@ -78,13 +78,13 @@ const Main = () => {
         </Collapse>
       </Container>
       <Box as='section' mt='5'>
-        <Grid templateColumns='repeat(2,1fr)' gap={10}>
+        <Grid templateColumns='repeat(4,1fr)' gap={10}>
           {travelContentsView.map(product => (
             <TravleContent {...product} key={product.idx} />
           ))}
         </Grid>
       </Box>
-      <ReservationsIcon count={travelContentsView.length} />
+      <ReservationsIcon />
     </MainLayout>
   );
 };

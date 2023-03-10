@@ -1,8 +1,10 @@
 import { Box, IconButton, Text } from '@chakra-ui/react';
 import ShoppingBasket from 'assets/ShoppingBasket';
 import { useNavigate } from 'react-router-dom';
+import { useBasketState } from './context/BasketProvider';
 
-const ReservationsIcon = ({ count }: { count: number }) => {
+const ReservationsIcon = () => {
+  const count = useBasketState().length;
   const navigate = useNavigate();
   return (
     <Box
