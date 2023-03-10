@@ -35,7 +35,7 @@ const ReservationPage = () => {
 
   const handleItemChecked = (idx: number, checked: boolean) => {
     setCheckedItems(prev => {
-      prev[idx - 1] = checked;
+      prev[idx] = checked;
       return [...prev];
     });
   };
@@ -72,6 +72,7 @@ const ReservationPage = () => {
                     key={travelData.idx}
                     travelData={travelData}
                     checkedItem={checkedItems[index]}
+                    idx={index}
                     handleItemChecked={handleItemChecked}
                   />
                 );
@@ -81,7 +82,7 @@ const ReservationPage = () => {
                 <Td colSpan={5} bg='gray.100'>
                   <Flex
                     minW='xl'
-                    textAlign='center'
+                    textAlign={'center'}
                     flexDirection='column'
                     gap='5'
                     alignItems='center'

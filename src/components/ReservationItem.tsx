@@ -7,14 +7,20 @@ import { ActionType } from 'types/enum';
 interface ReservationItemParam {
   travelData: basketItem;
   checkedItem: boolean;
+  idx: number;
   handleItemChecked: (idx: number, checked: boolean) => void;
 }
 
-const ReservationItem = ({ travelData, checkedItem, handleItemChecked }: ReservationItemParam) => {
+const ReservationItem = ({
+  travelData,
+  checkedItem,
+  idx,
+  handleItemChecked,
+}: ReservationItemParam) => {
   const basketDispatch = useBasketDispatch();
 
   const changeChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleItemChecked(travelData.idx, event.target.checked);
+    handleItemChecked(idx, event.target.checked);
   };
 
   const onChangeCount = (event: React.ChangeEvent<HTMLSelectElement>) => {
