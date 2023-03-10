@@ -4,7 +4,6 @@ import MainLayout from 'components/MainLayout';
 import ReservationsIcon from 'components/ReservationsIcon';
 import TravleContent from 'components/TravleContent';
 import { useState } from 'react';
-
 import { useLoaderData } from 'react-router-dom';
 import { FilterItems, travleContent } from 'types';
 
@@ -78,7 +77,7 @@ const Main = () => {
         </Collapse>
       </Container>
       <Box as='section' mt='5'>
-        <Grid templateColumns='repeat(4,1fr)' gap={10}>
+        <Grid templateColumns='repeat(4,1fr)' gap={12}>
           {travelContentsView.map(product => (
             <TravleContent {...product} key={product.idx} />
           ))}

@@ -7,15 +7,17 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
     <>
       <NavBar />
       <Box
-        maxWidth={1000}
+        maxWidth='100vw'
+        minHeight='100vh'
         margin='auto'
-        paddingTop={100}
+        paddingTop={30}
         paddingBottom={100}
         display='flex'
         alignItems='center'
         justifyContent='center'
         flexDirection='column'
         as='main'
+        backgroundColor='gray.200'
       >
         {children}
       </Box>

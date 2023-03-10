@@ -1,23 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardFooter,
-  Divider,
-  GridItem,
-  Heading,
-  Image,
-  Stack,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import React from 'react';
+import { Card, CardBody, Heading, Image, Stack, Text, Flex, useDisclosure } from '@chakra-ui/react';
 import { travleContent } from 'types';
 import TravleDetailModal from 'components/modal/TravleDetailModal';
-import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
-import { ActionType } from 'types/enum';
-
 const TravleContent = ({
   idx,
   name,
@@ -29,58 +13,34 @@ const TravleContent = ({
   registrationDate,
 }: travleContent) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const dispatch = useBasketDispatch();
-  const basket = useBasketState();
-  const [isMaximum, setIsMaximum] = useState(false);
-
-  useEffect(() => {
-    if (basket.filter(product => product.idx === idx).length >= maximumPurchases)
-      setIsMaximum(true);
-    else setIsMaximum(false);
-  }, [basket]);
-
-  const addItem = () => {
-    if (basket.findIndex(product => product.idx === idx) !== -1) {
-      return alert('이미 장바구니에 담겨있습니다');
-    }
-    dispatch({
-      type: ActionType.ADD_ITEM,
-      item: {
-        idx,
-        name,
-        mainImage,
-        price,
-        maximumPurchases,
-        count: 1,
-      },
-    });
-    alert('예약에 성공하였습니다');
-  };
 
   return (
-    <GridItem>
-      <Card maxW='sm' variant='outline'>
-        <CardBody>
-          <Image src={mainImage} alt='product image' fit='fill' htmlWidth='100%' />
-          <Stack mt={6} spacing={3}>
-            <Heading size='sm'>{name}</Heading>
-            <Text>상품번호:{idx}</Text>
-            <Text>사용가능 지역:{spaceCategory}</Text>
-            <Text fontSize='2xl'>{price.toLocaleString('ko-KR')}원</Text>
-          </Stack>
-        </CardBody>
-        <Divider />
-        <CardFooter>
-          <ButtonGroup>
-            <Button colorScheme='blue' size='md' onClick={addItem} isDisabled={isMaximum}>
-              예약
-            </Button>
-            <Button colorScheme='gray' size='md' onClick={onOpen}>
-              상세보기
-            </Button>
-          </ButtonGroup>
-        </CardFooter>
-      </Card>
+    <Card align='center'>
+      <CardBody onClick={onOpen} cursor='pointer' position='relative'>
+        <Text
+          position='absolute'
+          fontSize='2xl'
+          margin='2'
+          color='white'
+          textShadow='0px 2px 4px rgb(0 0 0 / 50%);'
+          as='b'
+        >
+          {idx}
+        </Text>
+        <Image src={mainImage} alt={name} borderRadius='lg' width='100%' />
+        <Stack mt='6' spacing='3'>
+          <Heading size='md'>{name}</Heading>
+          <Flex justifyContent='space-between'>
+            <Text fontSize='16' display='inline-block' color='gray'>
+              {spaceCategory}
+            </Text>
+            <Text fontSize='16' display='inline-block' color='red.400'>
+              {price}원
+            </Text>
+          </Flex>
+        </Stack>
+      </CardBody>
+
       <TravleDetailModal
         show={isOpen}
         close={onClose}
@@ -93,7 +53,7 @@ const TravleContent = ({
         registrationDate={registrationDate}
         description={description}
       />
-    </GridItem>
+    </Card>
   );
 };
 
