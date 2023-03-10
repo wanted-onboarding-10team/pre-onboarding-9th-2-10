@@ -22,6 +22,7 @@
 ## 📝Contents
 
 ### 배포링크
+https://pre-onboarding-9th-2-10-git-develop-wanted-onboarding-10team.vercel.app/
 
 ### 프로젝트 실행 방법
 
