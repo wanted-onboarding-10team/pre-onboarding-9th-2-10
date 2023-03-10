@@ -9,6 +9,10 @@ export interface travleContent {
   registrationDate: string;
 }
 
+export interface FilterItems {
+  price: number[];
+  spaceCategory: string[];
+
 export interface basketItem {
   idx: number;
   name: string;

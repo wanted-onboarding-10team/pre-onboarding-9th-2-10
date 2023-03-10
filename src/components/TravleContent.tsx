@@ -1,3 +1,5 @@
+
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -12,10 +14,9 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
-import TravleDetailModal from 'components/modal/TravleDetailModal';
-import { useEffect, useState } from 'react';
 import { travleContent } from 'types';
+import TravleDetailModal from 'components/modal/TravleDetailModal';
+import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
 
 const TravleContent = ({
   idx,
