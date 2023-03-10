@@ -18,7 +18,7 @@ const Main = () => {
     else setData(priceFilterData.filter(v => categoryFilters.includes(v.spaceCategory)));
   };
 
-  const handleCategoryFilterChange = (event: any) => {
+  const handleCategoryFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (event.target.checked) {
       setCategoryFilters([...categoryFilters, value]);
@@ -39,11 +39,14 @@ const Main = () => {
 
   return (
     <MainLayout>
-      <Flex>
-        <Input onChange={e => setMin(Number(e.target.value))} value={min} /> ~
-        <Input onChange={e => setMax(Number(e.target.value))} value={max} />원
+      <form onReset={dataReset}>
+        <Input onChange={e => setMin(Number(e.target.value))} width='140px' defaultValue={min} /> ~
+        <Input onChange={e => setMax(Number(e.target.value))} width='140px' defaultValue={max} />원
         <Button isDisabled={min >= max} onClick={filter} colorScheme='red'></Button>
-      </Flex>
+        <Button onClick={dataReset} type='reset'>
+          초기화
+        </Button>
+      </form>
 
       <Flex direction='column'>
         {['서울', '강원', '부산', '대구', '제주'].map(v => (
@@ -57,7 +60,6 @@ const Main = () => {
           </div>
         ))}
       </Flex>
-      <Button onClick={dataReset}>초기화</Button>
 
       <Box as='section'>
         <Grid templateColumns='repeat(2,1fr)' gap={10}>
