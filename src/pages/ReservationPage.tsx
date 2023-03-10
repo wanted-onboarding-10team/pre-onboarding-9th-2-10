@@ -35,7 +35,7 @@ const ReservationPage = () => {
 
   const handleItemChecked = (idx: number, checked: boolean) => {
     setCheckedItems(prev => {
-      prev[idx - 1] = checked;
+      prev[idx] = checked;
       return [...prev];
     });
   };
@@ -72,6 +72,7 @@ const ReservationPage = () => {
                     key={travelData.idx}
                     travelData={travelData}
                     checkedItem={checkedItems[index]}
+                    idx={index}
                     handleItemChecked={handleItemChecked}
                   />
                 );

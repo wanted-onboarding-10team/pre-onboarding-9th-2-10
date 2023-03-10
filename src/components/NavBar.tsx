@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   return (
-    <Box as={'nav'} p={'10px 10px'}>
+    <Box as='nav' p='10px 10px'>
       <Menu>
         <MenuButton
           as={IconButton}

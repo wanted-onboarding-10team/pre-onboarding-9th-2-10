@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { FilterItems, travleContent } from 'types';
 
+const dataPriceRange = [0, 0];
+
 const Main = () => {
   const data = useLoaderData() as travleContent[];
   const spaceCategoryData = Array.from(
@@ -19,6 +21,16 @@ const Main = () => {
     spaceCategory: [],
   });
 
+  // DETERMINED MIN MAX PRICE OF THE DATA
+  let min = data[0].price;
+  let max = data[0].price;
+  data.forEach(e => {
+    if (e.price < min) min = e.price;
+    else if (e.price > max) max = e.price;
+  });
+  dataPriceRange[0] = min;
+  dataPriceRange[1] = max;
+
   const setItems = (items: FilterItems) => {
     setFilterItems(items);
   };
@@ -29,7 +41,7 @@ const Main = () => {
     const isSpaceCategoryFilter = spaceCategory.length > 0;
     if (isPriceFilter && isSpaceCategoryFilter) {
       return data.filter(content => {
-        const contentPrice = content.price / 1000;
+        const contentPrice = content.price;
         return price[0] <= contentPrice &&
           contentPrice <= price[1] &&
           spaceCategory.includes(content.spaceCategory)
@@ -38,7 +50,7 @@ const Main = () => {
       });
     } else if (isPriceFilter) {
       return data.filter(content => {
-        const contentPrice = content.price / 1000;
+        const contentPrice = content.price;
         return price[0] <= contentPrice && contentPrice <= price[1] ? content : null;
       });
     } else if (isSpaceCategoryFilter) {
@@ -60,6 +72,7 @@ const Main = () => {
             defaultSpaceCategory={spaceCategoryData}
             filterItems={filterItems}
             setFilterItems={setItems}
+            dataPriceRange={dataPriceRange}
           />
         </Collapse>
       </Container>

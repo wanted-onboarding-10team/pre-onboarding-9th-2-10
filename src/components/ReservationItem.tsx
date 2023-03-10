@@ -2,24 +2,31 @@ import { Box, Button, Checkbox, Image, Select, Td, Text, Tr } from '@chakra-ui/r
 import { useBasketDispatch } from 'components/context/BasketProvider';
 import React from 'react';
 import { basketItem } from 'types';
+import { ActionType } from 'types/enum';
 
 interface ReservationItemParam {
   travelData: basketItem;
   checkedItem: boolean;
+  idx: number;
   handleItemChecked: (idx: number, checked: boolean) => void;
 }
 
-const ReservationItem = ({ travelData, checkedItem, handleItemChecked }: ReservationItemParam) => {
+const ReservationItem = ({
+  travelData,
+  checkedItem,
+  idx,
+  handleItemChecked,
+}: ReservationItemParam) => {
   const basketDispatch = useBasketDispatch();
 
   const changeChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleItemChecked(travelData.idx, event.target.checked);
+    handleItemChecked(idx, event.target.checked);
   };
 
   const onChangeCount = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const count = event.target.value;
     basketDispatch({
-      type: 'CHANGE_COUNT',
+      type: ActionType.CHANGE_COUNT,
       item: {
         ...travelData,
         count: +count,
@@ -40,7 +47,7 @@ const ReservationItem = ({ travelData, checkedItem, handleItemChecked }: Reserva
             fallback={
               <Box
                 boxSize={100}
-                bg={'gray.400'}
+                bg='gray.400'
                 display='flex'
                 alignItems='center'
                 justifyContent='center'
@@ -71,7 +78,7 @@ const ReservationItem = ({ travelData, checkedItem, handleItemChecked }: Reserva
           size='xs'
           onClick={() =>
             basketDispatch({
-              type: 'DELETE_ITEM',
+              type: ActionType.DELETE_ITEM,
               item: travelData,
             })
           }

@@ -1,10 +1,11 @@
 import { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
 import { basketItem } from 'types';
+import { ActionType } from 'types/enum';
 
 type Action =
-  | { type: 'ADD_ITEM'; item: basketItem }
-  | { type: 'DELETE_ITEM'; item: basketItem }
-  | { type: 'CHANGE_COUNT'; item: basketItem };
+  | { type: ActionType.ADD_ITEM; item: basketItem }
+  | { type: ActionType.DELETE_ITEM; item: basketItem }
+  | { type: ActionType.CHANGE_COUNT; item: basketItem };
 
 type ActionDispatch = Dispatch<Action>;
 type BasketState = basketItem[];
@@ -13,14 +14,23 @@ export const BasketDispatchContext = createContext<ActionDispatch | null>(null);
 
 function reducer(state: basketItem[], action: Action): BasketState {
   switch (action.type) {
-    case 'ADD_ITEM':
+    case ActionType.ADD_ITEM:
       if (!state.find(data => data.idx === action.item.idx)) {
         const addData = [...state, action.item];
         localStorage.setItem('shopping-basket', JSON.stringify(addData));
         return addData;
+      } else {
+        const changeData = state.map(item => {
+          if (item.idx === action.item.idx && action.item.count !== action.item.maximumPurchases) {
+            return { ...item, count: action.item.count + 1 };
+          }
+          return item;
+        });
+        localStorage.setItem('shopping-basket', JSON.stringify(changeData));
+        return changeData;
       }
       return state;
-    case 'DELETE_ITEM':
+    case ActionType.DELETE_ITEM:
       const deleteData = [...state];
       deleteData.splice(
         deleteData.findIndex(v => v.idx === action.item.idx),
@@ -28,7 +38,7 @@ function reducer(state: basketItem[], action: Action): BasketState {
       );
       localStorage.setItem('shopping-basket', JSON.stringify(deleteData));
       return deleteData;
-    case 'CHANGE_COUNT':
+    case ActionType.CHANGE_COUNT:
       const changeData = state.map(item => {
         if (item.idx === action.item.idx) {
           return { ...item, count: action.item.count };

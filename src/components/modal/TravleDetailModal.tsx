@@ -35,7 +35,7 @@ const TravleDetailModal = ({
         <ModalHeader>{name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Image src={mainImage} alt='product image' htmlWidth={'100%'} />
+          <Image src={mainImage} alt='product image' htmlWidth='100%' />
           <Stack spacing={10}>
             <Text>{description}</Text>
             <Box>
@@ -43,7 +43,7 @@ const TravleDetailModal = ({
               <Text>사용가능 지역 : {spaceCategory}</Text>
               <Text>최대구매 횟수 : {maximumPurchases}</Text>
               <Text color='gray.500'>상품 등록 시간: {registrationDate}</Text>
-              <Text fontSize={'2xl'} color='blue.400'>
+              <Text fontSize='2xl' color='blue.400'>
                 {price.toLocaleString('ko-KR')}원
               </Text>
             </Box>
