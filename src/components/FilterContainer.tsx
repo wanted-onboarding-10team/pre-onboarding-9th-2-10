@@ -16,7 +16,7 @@ import {
   TagLabel,
   TagLeftIcon,
 } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FilterItems } from 'types';
 
 interface FilterContainerParam {
@@ -61,7 +61,7 @@ const FilterContainer = ({
   };
 
   return (
-    <Box borderWidth='1px' mt={1} p={3} borderRadius='lg'>
+    <Box borderWidth='1px' mt={1} p={3} borderRadius='lg' backgroundColor='white'>
       <Box padding={5}>
         <Heading fontSize={'xl'}>가격</Heading>
         <Box minH='60px' padding='10x 5px'>

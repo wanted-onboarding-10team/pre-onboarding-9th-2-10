@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Button,
-  ButtonGroup,
   Card,
   CardBody,
-  CardFooter,
-  Divider,
-  GridItem,
   Heading,
   Image,
   Stack,
   Text,
+  Flex,
   useDisclosure,
+  Button,
 } from '@chakra-ui/react';
 import { travelContent } from 'types';
 import TravelDetailModal from 'components/modal/TravelDetailModal';
-import { useBasketDispatch, useBasketState } from 'components/context/BasketProvider';
+import { useBasketDispatch, useBasketState } from './context/BasketProvider';
 import { ActionType } from 'types/enum';
 
 const TravelContent = ({
@@ -39,7 +36,9 @@ const TravelContent = ({
     else setIsMaximum(false);
   }, [basket]);
 
-  const addItem = () => {
+
+  const addItem = (e: any) => {
+    e.stopPropagation();
     if (basket.findIndex(product => product.idx === idx) !== -1) {
       return alert('이미 장바구니에 담겨있습니다');
     }
@@ -58,29 +57,35 @@ const TravelContent = ({
   };
 
   return (
-    <GridItem>
-      <Card maxW='sm' variant='outline'>
-        <CardBody>
-          <Image src={mainImage} alt='product image' fit='fill' htmlWidth='100%' />
-          <Stack mt={6} spacing={3}>
-            <Heading size='sm'>{name}</Heading>
-            <Text>상품번호:{idx}</Text>
-            <Text>사용가능 지역:{spaceCategory}</Text>
-            <Text fontSize='2xl'>{price.toLocaleString('ko-KR')}원</Text>
-          </Stack>
-        </CardBody>
-        <Divider />
-        <CardFooter>
-          <ButtonGroup>
-            <Button colorScheme='blue' size='md' onClick={addItem} isDisabled={isMaximum}>
-              예약
-            </Button>
-            <Button colorScheme='gray' size='md' onClick={onOpen}>
-              상세보기
-            </Button>
-          </ButtonGroup>
-        </CardFooter>
-      </Card>
+    <Card align='center'>
+      <CardBody onClick={onOpen} cursor='pointer' position='relative'>
+        <Text
+          position='absolute'
+          fontSize='2xl'
+          margin='2'
+          color='white'
+          textShadow='0px 2px 4px rgb(0 0 0 / 50%);'
+          as='b'
+        >
+          {idx}
+        </Text>
+        <Image src={mainImage} alt={name} borderRadius='lg' width='100%' />
+        <Stack mt='6' spacing='3'>
+          <Heading size='md'>{name}</Heading>
+          <Flex justifyContent='space-between'>
+            <Text fontSize='16' display='inline-block' color='gray'>
+              {spaceCategory}
+            </Text>
+            <Text fontSize='16' display='inline-block' color='red.400'>
+              {price.toLocaleString('ko-KR')}원
+            </Text>
+          </Flex>
+        </Stack>
+        <Button colorScheme='blue' size='md' onClick={addItem} isDisabled={isMaximum}>
+          예약
+        </Button>
+      </CardBody>
+
       <TravelDetailModal
         show={isOpen}
         close={onClose}
@@ -93,7 +98,8 @@ const TravelContent = ({
         registrationDate={registrationDate}
         description={description}
       />
-    </GridItem>
+    </Card>
+
   );
 };
 

@@ -1,9 +1,9 @@
 import { Box, Button, Collapse, Container, Grid, Text, useDisclosure } from '@chakra-ui/react';
 import FilterContainer from 'components/FilterContainer';
 import MainLayout from 'components/MainLayout';
+import ReservationsIcon from 'components/ReservationsIcon';
 import TravelContent from 'components/TravelContent';
 import { useState } from 'react';
-
 import { useLoaderData } from 'react-router-dom';
 import { FilterItems, travelContent } from 'types';
 
@@ -77,13 +77,13 @@ const Main = () => {
         </Collapse>
       </Container>
       <Box as='section' mt='5'>
-        <Text>총 상품 수: {travelContentsView.length}</Text>
-        <Grid templateColumns='repeat(2,1fr)' gap={10}>
+        <Grid templateColumns='repeat(4,1fr)' gap={12}>
           {travelContentsView.map(product => (
             <TravelContent {...product} key={product.idx} />
           ))}
         </Grid>
       </Box>
+      <ReservationsIcon />
     </MainLayout>
   );
 };

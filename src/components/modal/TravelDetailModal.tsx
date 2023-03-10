@@ -1,21 +1,22 @@
 import React from 'react';
+import { travelContent } from 'types';
 import {
-  Text,
+  Button,
+  Divider,
+  Flex,
   Image,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalHeader,
   ModalOverlay,
   Stack,
-  Box,
+  Text,
 } from '@chakra-ui/react';
-import { travelContent } from 'types';
 interface TravelDetailModalProps extends travelContent {
   show: boolean;
   close: () => void;
 }
+
 const TravelDetailModal = ({
   show,
   close,
@@ -29,28 +30,62 @@ const TravelDetailModal = ({
   registrationDate,
 }: TravelDetailModalProps) => {
   return (
-    <Modal isOpen={show} onClose={close}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{name}</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Image src={mainImage} alt='product image' htmlWidth='100%' />
-          <Stack spacing={10}>
-            <Text>{description}</Text>
-            <Box>
-              <Text>상품번호 : {idx}</Text>
-              <Text>사용가능 지역 : {spaceCategory}</Text>
-              <Text>최대구매 횟수 : {maximumPurchases}</Text>
-              <Text color='gray.500'>상품 등록 시간: {registrationDate}</Text>
-              <Text fontSize='2xl' color='blue.400'>
-                {price.toLocaleString('ko-KR')}원
+    <>
+      <Modal isOpen={show} onClose={close}>
+        <ModalOverlay />
+        <ModalContent maxW='1000px' height='550px' padding='40px 40px'>
+          <Text
+            position='absolute'
+            fontSize='2xl'
+            margin='2'
+            color='white'
+            textShadow='0px 2px 4px rgb(0 0 0 / 50%);'
+            as='b'
+          >
+            {idx}
+          </Text>
+          <ModalBody display='flex' gap='16' width='1200px' padding='0'>
+            <Image src={mainImage} width='450px' />
+            <Flex flexDir='column' width='400px'>
+              <Text fontSize='2xl' as='b'>
+                {name}
               </Text>
-            </Box>
-          </Stack>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+              <Divider />
+              <Stack spacing='2' paddingTop='3'>
+                <Text fontSize='sm' as='p'>
+                  {description}
+                </Text>
+                <Text color='red.400' as='b'>
+                  {price.toLocaleString('ko-KR')}원
+                </Text>
+                <Divider />
+                <Flex gap='3'>
+                  <Text fontSize='sm'> 사용 위치</Text>
+                  <Text fontSize='sm' as='b'>
+                    {spaceCategory}
+                  </Text>
+                </Flex>
+                <Flex gap='3'>
+                  <Text fontSize='sm'> 상품재고</Text>
+                  <Text fontSize='sm' as='b'>
+                    {maximumPurchases}개
+                  </Text>
+                </Flex>
+                <Flex gap='3'>
+                  <Text fontSize='sm'>등록날짜</Text>
+                  <Text fontSize='sm' as='b'>
+                    {registrationDate}
+                  </Text>
+                </Flex>
+              </Stack>
+              <Button colorScheme='blue' mr={3} onClick={close} marginTop='auto'>
+                닫기
+              </Button>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
