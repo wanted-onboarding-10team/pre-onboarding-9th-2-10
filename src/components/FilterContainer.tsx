@@ -3,31 +3,36 @@ import {
   Box,
   Button,
   Divider,
+  Flex,
   Heading,
+  Input,
   RangeSlider,
   RangeSliderFilledTrack,
   RangeSliderMark,
   RangeSliderThumb,
   RangeSliderTrack,
+  Spacer,
   Tag,
   TagLabel,
   TagLeftIcon,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FilterItems } from 'types';
 
 interface FilterContainerParam {
   defaultSpaceCategory: string[];
   filterItems: FilterItems;
   setFilterItems: (items: FilterItems) => void;
+  dataPriceRange: number[];
 }
 
 const FilterContainer = ({
   defaultSpaceCategory,
   filterItems,
   setFilterItems,
+  dataPriceRange,
 }: FilterContainerParam) => {
-  const [sliderValue, setSliderValue] = useState(filterItems.price);
+  const [priceRange, setPriceRange] = useState(dataPriceRange);
   const [spaceCategoriesFilter, setSpaceCatoriesFilter] = useState<string[]>(
     filterItems.spaceCategory,
   );
@@ -43,7 +48,7 @@ const FilterContainer = ({
 
   const applyFilterItems = () => {
     setFilterItems({
-      price: sliderValue,
+      price: priceRange,
       spaceCategory: spaceCategoriesFilter,
     });
   };
@@ -63,38 +68,32 @@ const FilterContainer = ({
           <RangeSlider
             maxW='90%'
             aria-label={['min', 'max']}
-            defaultValue={sliderValue}
-            onChange={val => setSliderValue(val)}
+            value={[priceRange[0], priceRange[1]]}
+            min={dataPriceRange[0]}
+            max={dataPriceRange[1]}
+            onChange={val => setPriceRange(val)}
             mt={10}
+            step={1000}
           >
-            <RangeSliderMark value={0} mt='1' fontSize='sm'>
-              0 원
-            </RangeSliderMark>
-            <RangeSliderMark value={50} mt='1' fontSize='sm'>
-              50,000 원
-            </RangeSliderMark>
-            <RangeSliderMark value={100} mt='1' fontSize='sm' w='20'>
-              100,000 원
-            </RangeSliderMark>
             <RangeSliderMark
-              value={sliderValue[0]}
+              value={priceRange[0]}
               textAlign='center'
               color='gray.500'
               mt='-10'
               w='15'
-              fontSize={'sm'}
+              fontSize='sm'
             >
-              {(sliderValue[0] * 1000).toLocaleString()} 원
+              {Number.isNaN(priceRange[0]) ? 0 : priceRange[0].toLocaleString()} 원
             </RangeSliderMark>
             <RangeSliderMark
-              value={sliderValue[1]}
+              value={priceRange[1]}
               textAlign='center'
               color='gray.500'
               mt='-10'
               w='20'
-              fontSize={'sm'}
+              fontSize='sm'
             >
-              {(sliderValue[1] * 1000).toLocaleString()} 원
+              {Number.isNaN(priceRange[1]) ? 0 : priceRange[1].toLocaleString()} 원
             </RangeSliderMark>
             <RangeSliderTrack>
               <RangeSliderFilledTrack />
@@ -103,10 +102,52 @@ const FilterContainer = ({
             <RangeSliderThumb boxSize={6} index={1} />
           </RangeSlider>
         </Box>
+        <Flex>
+          <Input
+            minW='100px'
+            maxW='100px'
+            marginRight='60'
+            value={priceRange[0]}
+            type='number'
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setPriceRange(prev => {
+                const result = [...prev];
+                const {
+                  target: { value },
+                } = event;
+                const price = parseInt(value);
+                if (price <= 0 || price >= dataPriceRange[1]) {
+                  result[0] = dataPriceRange[0];
+                } else result[0] = price;
+                return result;
+              })
+            }
+          />
+          <Spacer />
+          <Input
+            minW='100px'
+            value={priceRange[1]}
+            type='number'
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setPriceRange(prev => {
+                const result = [...prev];
+                const {
+                  target: { value },
+                } = event;
+                const price = parseInt(value);
+                if (price <= 0 || price >= dataPriceRange[1]) {
+                  result[1] = dataPriceRange[1];
+                } else result[1] = price;
+                return result;
+              })
+            }
+          />
+        </Flex>
       </Box>
+
       <Divider />
       <Box padding={5} display='flex' flexDirection='column'>
-        <Heading fontSize={'xl'}>장소</Heading>
+        <Heading fontSize='xl'>장소</Heading>
         <Box display='flex' gap={3} padding='10px 5px'>
           {defaultSpaceCategory.map(space =>
             spaceCategoriesFilter.includes(space) ? null : (
@@ -139,7 +180,7 @@ const FilterContainer = ({
           ))}
         </Box>
       </Box>
-      <Box display='flex' justifyContent={'space-around'}>
+      <Box display='flex' justifyContent='space-around'>
         <Button onClick={applyFilterItems}>필터 적용</Button>
         <Button onClick={resetFilterItems}>필터 취소</Button>
       </Box>
