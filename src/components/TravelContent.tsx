@@ -14,6 +14,7 @@ import { travelContent } from 'types';
 import TravelDetailModal from 'components/modal/TravelDetailModal';
 import { useBasketDispatch, useBasketState } from './context/BasketProvider';
 import { ActionType } from 'types/enum';
+
 const TravelContent = ({
   idx,
   name,
@@ -34,6 +35,7 @@ const TravelContent = ({
       setIsMaximum(true);
     else setIsMaximum(false);
   }, [basket]);
+
 
   const addItem = (e: any) => {
     e.stopPropagation();
@@ -97,6 +99,7 @@ const TravelContent = ({
         description={description}
       />
     </Card>
+
   );
 };
 

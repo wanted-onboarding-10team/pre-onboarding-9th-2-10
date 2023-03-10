@@ -12,7 +12,6 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-
 interface TravelDetailModalProps extends travelContent {
   show: boolean;
   close: () => void;
