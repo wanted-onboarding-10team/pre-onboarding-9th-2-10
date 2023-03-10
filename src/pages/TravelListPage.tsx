@@ -2,15 +2,15 @@ import { Box, Button, Collapse, Container, Grid, Text, useDisclosure } from '@ch
 import FilterContainer from 'components/FilterContainer';
 import MainLayout from 'components/MainLayout';
 import ReservationsIcon from 'components/ReservationsIcon';
-import TravleContent from 'components/TravleContent';
+import TravelContent from 'components/TravelContent';
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { FilterItems, travleContent } from 'types';
+import { FilterItems, travelContent } from 'types';
 
 const dataPriceRange = [0, 0];
 
 const Main = () => {
-  const data = useLoaderData() as travleContent[];
+  const data = useLoaderData() as travelContent[];
   const spaceCategoryData = Array.from(
     data.reduce((arr, currData) => arr.add(currData.spaceCategory), new Set<string>()),
   );
@@ -79,7 +79,7 @@ const Main = () => {
       <Box as='section' mt='5'>
         <Grid templateColumns='repeat(4,1fr)' gap={12}>
           {travelContentsView.map(product => (
-            <TravleContent {...product} key={product.idx} />
+            <TravelContent {...product} key={product.idx} />
           ))}
         </Grid>
       </Box>

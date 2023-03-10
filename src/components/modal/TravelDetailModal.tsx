@@ -1,5 +1,5 @@
 import React from 'react';
-import { travleContent } from 'types';
+import { travelContent } from 'types';
 import {
   Button,
   Divider,
@@ -13,12 +13,12 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-interface TravleDetailModalProps extends travleContent {
+interface TravelDetailModalProps extends travelContent {
   show: boolean;
   close: () => void;
 }
 
-const TravleDetailModal = ({
+const TravelDetailModal = ({
   show,
   close,
   idx,
@@ -29,7 +29,7 @@ const TravleDetailModal = ({
   price,
   maximumPurchases,
   registrationDate,
-}: TravleDetailModalProps) => {
+}: TravelDetailModalProps) => {
   return (
     <>
       <Modal isOpen={show} onClose={close}>
@@ -90,4 +90,4 @@ const TravleDetailModal = ({
   );
 };
 
-export default TravleDetailModal;
+export default TravelDetailModal;

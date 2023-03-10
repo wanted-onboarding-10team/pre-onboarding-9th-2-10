@@ -1,4 +1,4 @@
-export interface travleContent {
+export interface travelContent {
   idx: number;
   name: string;
   mainImage: string;
