@@ -6,18 +6,6 @@
 
 작업 기간 : 3/7 ~ 3/10 (4일간 진행)
 
-## 🌟Preview
-
-<table>
-    <tr>
-        <td>메인 페이지</td>
-        <td>장바구니 페이지</td>
-    </tr>
-    <tr>
-        <td>이미지</td>
-        <td>이미지</td>
-    </tr>
-</table>
 
 ## 📝Contents
 
