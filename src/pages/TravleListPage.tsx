@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Grid } from '@chakra-ui/react';
 import MainLayout from 'components/MainLayout';
 import TravleContent from 'components/TravleContent';
