@@ -68,7 +68,7 @@ const Main = () => {
           />
         </Collapse>
       </Container>
-      <Box as='section'>
+      <Box as='section' mt='5'>
         <Text>총 상품 수: {travelContentsView.length}</Text>
         <Grid templateColumns='repeat(2,1fr)' gap={10}>
           {travelContentsView.map(product => (

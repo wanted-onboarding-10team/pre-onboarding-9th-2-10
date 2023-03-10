@@ -56,7 +56,7 @@ const FilterContainer = ({
   };
 
   return (
-    <>
+    <Box borderWidth='1px' mt={1} p={3} borderRadius='lg'>
       <Box padding={5}>
         <Heading fontSize={'xl'}>가격</Heading>
         <Box minH='60px' padding='10x 5px'>
@@ -65,35 +65,36 @@ const FilterContainer = ({
             aria-label={['min', 'max']}
             defaultValue={sliderValue}
             onChange={val => setSliderValue(val)}
+            mt={10}
           >
             <RangeSliderMark value={0} mt='1' fontSize='sm'>
-              0
+              0 원
             </RangeSliderMark>
             <RangeSliderMark value={50} mt='1' fontSize='sm'>
-              50,000
+              50,000 원
             </RangeSliderMark>
-            <RangeSliderMark value={100} mt='1' fontSize='sm'>
-              100,000
+            <RangeSliderMark value={100} mt='1' fontSize='sm' w='20'>
+              100,000 원
             </RangeSliderMark>
             <RangeSliderMark
               value={sliderValue[0]}
               textAlign='center'
               color='gray.500'
               mt='-10'
-              ml='-5'
               w='15'
+              fontSize={'sm'}
             >
-              {(sliderValue[0] * 1000).toLocaleString()}
+              {(sliderValue[0] * 1000).toLocaleString()} 원
             </RangeSliderMark>
             <RangeSliderMark
               value={sliderValue[1]}
               textAlign='center'
               color='gray.500'
               mt='-10'
-              ml='-5'
-              w='15'
+              w='20'
+              fontSize={'sm'}
             >
-              {(sliderValue[1] * 1000).toLocaleString()}
+              {(sliderValue[1] * 1000).toLocaleString()} 원
             </RangeSliderMark>
             <RangeSliderTrack>
               <RangeSliderFilledTrack />
@@ -138,9 +139,11 @@ const FilterContainer = ({
           ))}
         </Box>
       </Box>
-      <Button onClick={applyFilterItems}>필터 적용</Button>
-      <Button onClick={resetFilterItems}>필터 취소</Button>
-    </>
+      <Box display='flex' justifyContent={'space-around'}>
+        <Button onClick={applyFilterItems}>필터 적용</Button>
+        <Button onClick={resetFilterItems}>필터 취소</Button>
+      </Box>
+    </Box>
   );
 };
 
